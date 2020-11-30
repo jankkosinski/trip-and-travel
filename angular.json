@@ -122,6 +122,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "Trip-And-Travel"
+    }
+  },
+  "defaultProject": "Trip-And-Travel",
+  "cli": {
+    "analytics": false
+  }
 }

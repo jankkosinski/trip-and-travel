@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="col s-12">
+        Actual reservations count: {{actualReservations}}
+    </div>
+    <div class="row" *ngFor="let item of example_trips; let idx = index">
+        <div class="col s12 m4">
+            <img class="circle responsive-img" src="{{item.img}}" alt="">
+        </div>
+        <div class="col s12 m8">
+            <div class="title">
+                {{item.name | uppercase}} - {{item.destination}}
+            </div>
+            <div class="info">
+                Date: {{item.start_date}} - {{item.end_date}} <br>
+                Price: {{item.price | currency}} <br>
+                Seats: {{item.availableSeats}} / {{item.maxSeats}} 
+                <span class="empty">
+                    {{item.availableSeats == 0 ? ' - There is no available seats' : ''}}
+                </span>
+            </div>
+            <button [disabled] = "item.availableSeats == 0 ? true : false" (click)="addReservation(idx)" class="btn-floating cyan waves-effect waves-light">
+                <i class="material-icons">add</i>
+            </button>
+            <button [disabled] = "item.availableSeats == item.maxSeats ? true : false" (click)="removeReservation(idx)" class="btn-floating red waves-effect waves-light">
+                <i class="material-icons">remove</i>
+            </button>
+        </div>
+        <div class="col s12 description">
+            {{item.description}}
+        </div>
+    </div>
+</div>
