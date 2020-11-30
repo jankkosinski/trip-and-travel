@@ -13,7 +13,7 @@
             <div class="info">
                 Date: {{item.start_date}} - {{item.end_date}} <br>
                 Price: {{item.price | currency}} <br>
-                Seats: {{item.availableSeats}} / {{item.maxSeats}} 
+                Seats: <span [style] = "item.availableSeats <= 3 ? 'color : orange' : ''">{{item.availableSeats}} / {{item.maxSeats}}</span> 
                 <span class="empty">
                     {{item.availableSeats == 0 ? ' - There is no available seats' : ''}}
                 </span>

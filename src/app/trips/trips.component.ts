@@ -7,6 +7,7 @@ import { TripStructure } from './trips_structure';
   templateUrl: './trips.component.html',
   styleUrls: ['./trips.component.css']
 })
+
 export class TripsComponent implements OnInit {
 
   actualReservations = 0;
