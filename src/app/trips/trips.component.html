@@ -16,10 +16,8 @@
                 Date: {{item.start_date}} - {{item.end_date}} <br>
                 Price: {{item.price | currency}}
                 <br>
-                Seats: <span [style] = "(item.availableSeats <= 3 && item.availableSeats > 0) ? 'color : orange' : '' || item.availableSeats == 0 ? 'color : red' : ''"> {{item.availableSeats}} / {{item.maxSeats}}</span> s
-                
-                <span class="empty">
-                    {{item.availableSeats == 0 ? ' - There is no available seats' : ''}}
+                Seats: <span [style] = "checkColor(item.availableSeats)"> {{item.availableSeats}} / {{item.maxSeats}}</span> 
+                <span *ngIf = "item.availableSeats == 0" class="no-seats"> - There is no available seats
                 </span>
             </div>
             <button [disabled] = "item.availableSeats == 0 ? true : false" (click)="addReservation(idx)" class="btn-floating cyan waves-effect waves-light app-margin">
