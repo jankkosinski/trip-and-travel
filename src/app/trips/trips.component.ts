@@ -70,4 +70,14 @@ export class TripsComponent implements OnInit {
     this.actualReservations--;
   }
 
+  checkColor (value) {
+    if (value == 0) {
+      return "color: red"
+    } else if (value <= 3) {
+      return "color: orange"
+    } else {
+      return ""
+    }
+  }
+
 }

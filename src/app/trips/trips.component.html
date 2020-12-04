@@ -4,7 +4,7 @@
     <div class="col s-12">
         <span [style] = "actualReservations > 10 ? 'background-color: green' : ''" > Actual reservations count: {{actualReservations}}</span>
     </div>
-    <div class="row" *ngFor="let item of example_trips; let idx = index" [style] = "borderPrices.high.id.includes(idx) ? 'border: 2px solid green' : '' || borderPrices.low.id.includes(idx) ? 'border: 2px solid red' : ''" >
+    <div class="row" *ngFor="let item of example_trips; let idx = index" [style] = "borderPrices.high.id.includes(idx) ? 'border: 4px solid green' : '' || borderPrices.low.id.includes(idx) ? 'border: 4px solid red' : ''" >
         <div class="col s12 m4" >
             <img class="circle responsive-img" src="{{item.img}}" alt="">
         </div>
@@ -16,15 +16,16 @@
                 Date: {{item.start_date}} - {{item.end_date}} <br>
                 Price: {{item.price | currency}}
                 <br>
-                Seats: <span [style] = "item.availableSeats <= 3 ? 'color : orange' : ''">{{item.availableSeats}} / {{item.maxSeats}}</span> 
+                Seats: <span [style] = "(item.availableSeats <= 3 && item.availableSeats > 0) ? 'color : orange' : '' || item.availableSeats == 0 ? 'color : red' : ''"> {{item.availableSeats}} / {{item.maxSeats}}</span> s
+                
                 <span class="empty">
                     {{item.availableSeats == 0 ? ' - There is no available seats' : ''}}
                 </span>
             </div>
-            <button [disabled] = "item.availableSeats == 0 ? true : false" (click)="addReservation(idx)" class="btn-floating cyan waves-effect waves-light">
+            <button [disabled] = "item.availableSeats == 0 ? true : false" (click)="addReservation(idx)" class="btn-floating cyan waves-effect waves-light app-margin">
                 <i class="material-icons">add</i>
             </button>
-            <button [disabled] = "item.availableSeats == item.maxSeats ? true : false" (click)="removeReservation(idx)" class="btn-floating red waves-effect waves-light">
+            <button [disabled] = "item.availableSeats == item.maxSeats ? true : false" (click)="removeReservation(idx)" class="btn-floating red waves-effect waves-light app-margin">
                 <i class="material-icons">remove</i>
             </button>
         </div>
