@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-trips-navbar',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./trips-navbar.component.css']
 })
 export class TripsNavbarComponent implements OnInit {
+
+  @Input() reservations: number;
 
   constructor() { }
 

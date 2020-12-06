@@ -2,8 +2,9 @@
   <mat-toolbar-row>
     <span>Trip&Travel</span>
     <span class="spacer"></span>
-    <button mat-icon-button >
-      <mat-icon>menu</mat-icon>
-    </button>
+    <span 
+      [style] = "reservations > 10 ? 'background-color: green' : ''"> 
+      Actual reservations count: {{reservations}}
+    </span>
   </mat-toolbar-row>
 </mat-toolbar>
