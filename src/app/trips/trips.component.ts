@@ -16,8 +16,8 @@ export class TripsComponent implements OnInit {
   example_trips: TripStructure[] = EXAMPLE_TRIPS;
 
   borderPrices = {
-    low: {value: 0, id: [0]}, 
-    high: {value: 0, id: [0]}
+    low: {value: 0, trips: []}, 
+    high: {value: 0, trips: []}
   };
 
   constructor() { 
@@ -25,21 +25,21 @@ export class TripsComponent implements OnInit {
       if (i == 0) {
         this.borderPrices.low.value = this.example_trips[i].price;
         this.borderPrices.high.value = this.example_trips[i].price;
-        this.borderPrices.low.id = [i];
-        this.borderPrices.high.id = [i];
+        this.borderPrices.low.trips = [this.example_trips[i]];
+        this.borderPrices.high.trips = [this.example_trips[i]];
       } else {
         if (this.example_trips[i].price > this.borderPrices.high.value) {
           this.borderPrices.high.value = this.example_trips[i].price;
-          this.borderPrices.high.id = [i];
+          this.borderPrices.high.trips = [this.example_trips[i]];
         } else if (this.example_trips[i].price == this.borderPrices.high.value) {
-          this.borderPrices.high.id.push(i);
+          this.borderPrices.high.trips.push(this.example_trips[i]);
         }
 
         if (this.example_trips[i].price < this.borderPrices.low.value) {
           this.borderPrices.low.value = this.example_trips[i].price;
-          this.borderPrices.low.id = [i];
+          this.borderPrices.low.trips = [this.example_trips[i]];
         } else if (this.example_trips[i].price == this.borderPrices.low.value) {
-          this.borderPrices.low.id.push(i);
+          this.borderPrices.low.trips.push(this.example_trips[i]);
         }
       }
     }

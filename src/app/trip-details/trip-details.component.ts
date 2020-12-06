@@ -13,6 +13,8 @@ export class TripDetailsComponent implements OnInit {
   @Output() onRemoveReservation = new EventEmitter();
   @Output() onRemoveTrip = new EventEmitter();
 
+  
+
   constructor() { }
 
   ngOnInit(): void {
