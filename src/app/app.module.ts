@@ -10,6 +10,7 @@ import { TripsNavbarComponent } from './trips-navbar/trips-navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TripDetailsComponent } from './trip-details/trip-details.component';
 import { StarRatesComponent } from './star-rates/star-rates.component';
+import { BarRatingModule } from "ngx-bar-rating";
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { StarRatesComponent } from './star-rates/star-rates.component';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    BarRatingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
