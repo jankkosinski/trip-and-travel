@@ -3,3 +3,8 @@
     margin-top: 20px;
     padding: 15px;
 }
+
+.bg-light {
+    background-color: lightsteelblue;
+    padding: 20px;
+}

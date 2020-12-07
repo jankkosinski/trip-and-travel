@@ -9,13 +9,16 @@ import { TripsComponent } from './trips/trips.component';
 import { TripsNavbarComponent } from './trips-navbar/trips-navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TripDetailsComponent } from './trip-details/trip-details.component';
+import { StarRatesComponent } from './star-rates/star-rates.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     TripsComponent,
     TripsNavbarComponent,
-    TripDetailsComponent
+    TripDetailsComponent,
+    StarRatesComponent
   ],
   imports: [
     BrowserModule,

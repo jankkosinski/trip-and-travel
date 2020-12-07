@@ -5,3 +5,14 @@
 .btn-margin {
     margin: 5px;
 }
+
+.img-h-still {
+    object-fit: cover;
+    height: 15vw;
+}
+
+@media (max-width: 600px) {
+    .img-h-still {
+        height: auto;
+    }
+}
