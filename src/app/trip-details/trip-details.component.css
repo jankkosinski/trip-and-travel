@@ -6,6 +6,10 @@
     margin: 5px;
 }
 
+.mb-5 {
+    margin-bottom: 20px;
+}
+
 .img-h-still {
     object-fit: cover;
     height: 15vw;

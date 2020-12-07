@@ -13,11 +13,25 @@ export class TripDetailsComponent implements OnInit {
   @Output() onRemoveReservation = new EventEmitter();
   @Output() onRemoveTrip = new EventEmitter();
 
-  
-
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  stars = [1, 2, 3, 4, 5];
+  rating = 0;
+  hoverState = 0;
+
+  enter(i) {
+    this.hoverState = i;
+  }
+
+  leave() {
+    this.hoverState = 0;
+  }
+
+  updateRating(i) {
+    this.rating = i;
   }
 
   addReservation () {
