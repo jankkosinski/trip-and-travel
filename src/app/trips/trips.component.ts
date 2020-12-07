@@ -49,21 +49,15 @@ export class TripsComponent implements OnInit {
   }
 
   addTripReservation(trip: TripStructure) {
-    for (let i = 0;  i < this.example_trips.length; i++) {
-      if (this.example_trips[i] == trip) {
-        this.example_trips[i].availableSeats = this.example_trips[i].availableSeats - 1;
-        this.actualReservations++;
-      }
-    }
+    let index = this.example_trips.indexOf(trip);
+    this.example_trips[index].availableSeats = this.example_trips[index].availableSeats - 1;
+    this.actualReservations++;
   }
 
   removeTripReservation(trip: TripStructure) {
-    for (let i = 0;  i < this.example_trips.length; i++) {
-      if (this.example_trips[i] == trip) {
-        this.example_trips[i].availableSeats = this.example_trips[i].availableSeats + 1;
-        this.actualReservations--;
-      }
-    }
+    let index = this.example_trips.indexOf(trip);
+    this.example_trips[index].availableSeats = this.example_trips[index].availableSeats + 1;
+    this.actualReservations--;
   }
 
   removeTrip(tripToRemove: TripStructure) {
