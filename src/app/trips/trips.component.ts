@@ -21,6 +21,9 @@ export class TripsComponent implements OnInit {
   };
 
   constructor() { 
+  }
+
+  ngOnInit(): void {
     for (let i = 0; i <  this.example_trips.length; i++) {
       if (i == 0) {
         this.borderPrices.low.value = this.example_trips[i].price;
@@ -43,9 +46,6 @@ export class TripsComponent implements OnInit {
         }
       }
     }
-  }
-
-  ngOnInit(): void {
   }
 
   addTripReservation(trip: TripStructure) {

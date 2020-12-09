@@ -10,27 +10,26 @@ export class StarRatesComponent implements OnInit {
   starClassName = "star-rating-blank";
   @Input() starId;
   @Input() rating;
+  @Input() hover;
 
   @Output() leave: EventEmitter<number> = new EventEmitter();
-  @Output() enter: EventEmitter<number> = new EventEmitter();
+  @Output() hoverStar: EventEmitter<number> = new EventEmitter();
   @Output() bigClick: EventEmitter<number> = new EventEmitter();
-  constructor() {}
+
+  constructor() { }
 
   ngOnInit() {
-    console.log(this.starId);
-    console.log(this.rating);
-
     if (this.rating >= this.starId) {
       this.starClassName = "star-rating-filled";
     }
   }
 
-  onenter() {
-    this.enter.emit(this.starId);
+  onHover() {
+    this.hoverStar.emit(this.starId);
   }
 
-  onleave() {
-    this.leave.emit(this.starId);
+  onLeave() {
+    this.leave.emit();
   }
 
   starClicked() {

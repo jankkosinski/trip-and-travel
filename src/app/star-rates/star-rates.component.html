@@ -1,5 +1,9 @@
-<svg (click)="starClicked()" class="star-rating-blank" (mouseenter)="onenter()" (mouseleave)="onleave()"
-  [ngClass]="{'star-rating-filled': rating >= starId, 'star-rating-blank': rating < starId}" height="30px" width="30px"
-  viewBox="0 0 25 23" data-rating="1">
-  <polygon stroke-width="0" points="9.9, 1.1, 3.3, 21.78, 19.8, 8.58, 0, 8.58, 16.5, 21.78" />
-</svg>
+<div class="btn-floating waves-effect waves-light"
+  (click)="starClicked()"
+  (mouseenter)="onHover()"
+  (mouseleave)="onLeave()">
+  <i class="star-rating-blank large material-icons"
+    [ngClass]="{'star-rating-filled': rating >= starId, 'star-rating-blank': rating <starId,'star-rating-hover': hover >= starId}">
+    star
+  </i>
+</div>

@@ -24,14 +24,18 @@
     <button (click)="removeTrip()" class="btn red waves-effect waves-light btn-margin mb-5">
         {{"remove trip" | uppercase}}
     </button>
-    <div >
-        <ng-container *ngFor="let star of stars">
-            <app-star-rates
-                [starId]="star" [rating]="hoverState || rating" (enter)="enter($event)" (leave)="leave($event)"
-                (bigClick)="updateRating(star)">
-            </app-star-rates>
-        </ng-container>
-    </div>
+</div>
+<div class="col s12 m8 l8" style="float: right;">
+    <ng-container *ngFor="let star of stars">
+        <app-star-rates
+            [starId]="star" 
+            [rating]="rating"
+            [hover]="hoverState" 
+            (hoverStar)="hoverStar($event)" 
+            (leave)="clearStarHover()"
+            (bigClick)="updateRating($event)">
+        </app-star-rates>
+    </ng-container>
 </div>
 <div class="col s12 description">
     {{trip.description}}

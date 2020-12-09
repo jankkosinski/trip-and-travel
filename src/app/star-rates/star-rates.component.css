@@ -1,7 +1,11 @@
 .star-rating-filled {
-    fill: gold;
+    color: gold;
   }
   
   .star-rating-blank {
-    fill: #696262;
+    color: #696262;
+  }
+
+  .star-rating-hover {
+    color: orange;
   }

@@ -17,6 +17,7 @@
 
 @media (max-width: 600px) {
     .img-h-still {
-        height: auto;
+        height: 250px;
+        width: 100%;
     }
 }

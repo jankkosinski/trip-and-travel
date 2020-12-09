@@ -19,19 +19,20 @@ export class TripDetailsComponent implements OnInit {
   }
 
   stars = [1, 2, 3, 4, 5];
-  rating = 0;
   hoverState = 0;
+  rating = 0;
 
-  enter(i) {
-    this.hoverState = i;
+  hoverStar(starId) {
+    this.hoverState = starId;
   }
 
-  leave() {
+  clearStarHover() {
     this.hoverState = 0;
   }
 
-  updateRating(i) {
-    this.rating = i;
+  updateRating(starId) {
+    this.rating = starId;
+    this.hoverState = 0;
   }
 
   addReservation () {
