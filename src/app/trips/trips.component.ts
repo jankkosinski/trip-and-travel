@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { from } from 'rxjs';
 import { TripStructure } from '../models/trips_structure';
 import { EXAMPLE_TRIPS } from '../models/trips-data'
+import { ElementSchemaRegistry } from '@angular/compiler';
 
 @Component({
   selector: 'app-trips',
@@ -63,6 +64,20 @@ export class TripsComponent implements OnInit {
   removeTrip(tripToRemove: TripStructure) {
     this.example_trips = this.example_trips.filter(obj => obj !== tripToRemove);
     this.actualReservations = this.actualReservations - (tripToRemove.maxSeats - tripToRemove.availableSeats);
+  }
+
+  rateTrip(trip: TripStructure, rate: number) {
+    let index = this.example_trips.indexOf(trip);
+    let tripValueRate = this.example_trips[index].rate;
+    let tripValueRatedCount = this.example_trips[index].rated_count;
+    let newValueRate;
+    if (tripValueRatedCount == 0) {
+      newValueRate = rate;
+    } else {
+      newValueRate = ((tripValueRate*tripValueRatedCount) + rate) / (tripValueRatedCount + 1);
+    }
+    this.example_trips[index].rate = newValueRate;
+    this.example_trips[index].rated_count = tripValueRatedCount + 1;
   }
 
 }

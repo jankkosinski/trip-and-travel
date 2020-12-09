@@ -9,4 +9,6 @@ export interface TripStructure {
     maxSeats: number;
     description: string;
     img: string;
+    rate: number;
+    rated_count: number;
 }

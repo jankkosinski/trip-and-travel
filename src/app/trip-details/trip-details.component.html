@@ -13,7 +13,7 @@
         <span *ngIf = "trip.availableSeats == 0" class="no-seats"> - There is no available seats
         </span>
     </div>
-    <button [disabled] = "trip.availableSeats == 0 ? true : false" (click)="addReservation()" class="btn-floating cyan waves-effect waves-light btn-margin">
+    <button [disabled] = "trip.availableSeats == 0 ? true : false" (click)="addReservation()" class="btn-floating waves-effect waves-light btn-margin">
         <i class="material-icons">add</i>
     </button>
     <button [disabled] = "trip.availableSeats == trip.maxSeats ? true : false" (click)="removeReservation()" class="btn-floating red waves-effect waves-light btn-margin">
@@ -29,13 +29,17 @@
     <ng-container *ngFor="let star of stars">
         <app-star-rates
             [starId]="star" 
-            [rating]="rating"
+            [rating]="trip.rate"
             [hover]="hoverState" 
             (hoverStar)="hoverStar($event)" 
             (leave)="clearStarHover()"
             (bigClick)="updateRating($event)">
         </app-star-rates>
     </ng-container>
+    <div>
+        Ocena: {{getTripRate()}} / 5 <br>
+        Zagłosowało: {{trip.rated_count}}
+    </div>
 </div>
 <div class="col s12 description">
     {{trip.description}}

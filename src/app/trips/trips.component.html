@@ -8,7 +8,8 @@
             [trip]="item" 
             (onAddReservation)="addTripReservation($event)" 
             (onRemoveReservation)="removeTripReservation($event)" 
-            (onRemoveTrip)="removeTrip($event)">
+            (onRemoveTrip)="removeTrip($event)"
+            (onRateTrip)="rateTrip(item,$event)">
         </app-trip-details>
     </div>
 </div>

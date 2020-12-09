@@ -12,6 +12,7 @@ export class TripDetailsComponent implements OnInit {
   @Output() onAddReservation = new EventEmitter();
   @Output() onRemoveReservation = new EventEmitter();
   @Output() onRemoveTrip = new EventEmitter();
+  @Output() onRateTrip =new EventEmitter();
 
   constructor() { }
 
@@ -20,7 +21,6 @@ export class TripDetailsComponent implements OnInit {
 
   stars = [1, 2, 3, 4, 5];
   hoverState = 0;
-  rating = 0;
 
   hoverStar(starId) {
     this.hoverState = starId;
@@ -31,8 +31,8 @@ export class TripDetailsComponent implements OnInit {
   }
 
   updateRating(starId) {
-    this.rating = starId;
     this.hoverState = 0;
+    this.onRateTrip.emit(starId);
   }
 
   addReservation () {
@@ -55,6 +55,10 @@ export class TripDetailsComponent implements OnInit {
     } else {
       return "";
     }
+  }
+
+  getTripRate() {
+    return (Math.round(this.trip.rate * 100) / 100).toFixed(2);
   }
 
 }
