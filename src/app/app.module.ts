@@ -5,11 +5,11 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 
 import { AppComponent } from './app.component';
-import { TripsComponent } from './trips/trips.component';
-import { TripsNavbarComponent } from './trips-navbar/trips-navbar.component';
+import { TripsComponent } from './components/trips/trips.component';
+import { TripsNavbarComponent } from './components/trips-navbar/trips-navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TripDetailsComponent } from './trip-details/trip-details.component';
-import { StarRatesComponent } from './star-rates/star-rates.component';
+import { TripDetailsComponent } from './components/trip-details/trip-details.component';
+import { StarRatesComponent } from './components/star-rates/star-rates.component';
 
 
 @NgModule({

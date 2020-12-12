@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TripStructure } from '../models/trips_structure';
+import { TripStructure } from '../../models/trips_structure';
 
 @Component({
   selector: 'app-trip-details',

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { from } from 'rxjs';
-import { TripStructure } from '../models/trips_structure';
-import { EXAMPLE_TRIPS } from '../models/trips-data'
-import { ElementSchemaRegistry } from '@angular/compiler';
+import { TripStructure } from '../../models/trips_structure';
+import { TripsDataService } from '../../services/trips-data.service';
 
 @Component({
   selector: 'app-trips',
@@ -14,15 +12,14 @@ export class TripsComponent implements OnInit {
 
   actualReservations = 0;
 
-  example_trips: TripStructure[] = EXAMPLE_TRIPS;
+  example_trips: TripStructure[] = [];
 
   borderPrices = {
     low: {value: 0, trips: []}, 
     high: {value: 0, trips: []}
   };
 
-  constructor() { 
-  }
+  constructor(private tripDataService: TripsDataService) { }
 
   ngOnInit(): void {
     for (let i = 0; i <  this.example_trips.length; i++) {
