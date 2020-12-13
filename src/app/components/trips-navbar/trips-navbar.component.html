@@ -3,12 +3,22 @@
     <span>Trip&Travel</span>
     <span class="spacer"></span>
     <button 
+      *ngIf="reservationsCount > 0"
       mat-raised-button 
-      [ngClass]="{'bg-basic': reservationsCount < 10, 'bg-special': reservationsCount >= 10}"
+      [ngClass]="{'bg-basic-anim': reservationsCount < 10, 'bg-special-anim': reservationsCount >= 10}"
       [matBadge]="reservationsCount" 
       matBadgeColor="warn"
       (click) = "openCart()">
       Cart  <mat-icon>shopping_cart</mat-icon>
     </button>
+
+    <button 
+    *ngIf="reservationsCount == 0"
+      mat-raised-button 
+      class="bg-basic"
+      (click)="openSnackBar('Your cart is empty.', 'Close')">
+      Cart  <mat-icon>shopping_cart</mat-icon>
+    </button>
+
   </mat-toolbar-row>
 </mat-toolbar>
