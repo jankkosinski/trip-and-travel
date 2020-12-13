@@ -10,6 +10,7 @@ import { TripsNavbarComponent } from './components/trips-navbar/trips-navbar.com
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TripDetailsComponent } from './components/trip-details/trip-details.component';
 import { StarRatesComponent } from './components/star-rates/star-rates.component';
+import { CartComponent } from './components/cart/cart.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { StarRatesComponent } from './components/star-rates/star-rates.component
     TripsComponent,
     TripsNavbarComponent,
     TripDetailsComponent,
-    StarRatesComponent
+    StarRatesComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
