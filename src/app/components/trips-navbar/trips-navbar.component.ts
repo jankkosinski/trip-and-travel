@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-trips-navbar',
@@ -7,11 +7,16 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class TripsNavbarComponent implements OnInit {
 
-  @Input() reservations: number;
+  @Input() reservationsCount: number;
+  @Output() openCartSidebar = new EventEmitter;
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  openCart(): void {
+    this.openCartSidebar.emit();
   }
 
 }

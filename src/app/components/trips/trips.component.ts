@@ -10,7 +10,7 @@ import { TripsDataService } from '../../services/trips-data.service';
 
 export class TripsComponent implements OnInit {
 
-  myActualReservations = 0;
+  reservationsCount = 0;
   tripsDataList: TripStructure[] = <TripStructure[]>[];
   borderPrices: BorderTrips = <BorderTrips>{};
 
@@ -58,18 +58,18 @@ export class TripsComponent implements OnInit {
   addTripReservation(trip: TripStructure) {
     let newValue = trip.availableSeats - 1;
     this.tripsDataList = this.tripDataService.updateProduct(trip, "availableSeats", newValue);
-    this.myActualReservations++;
+    this.reservationsCount++;
   }
 
   removeTripReservation(trip: TripStructure) {
     let newValue = trip.availableSeats + 1;
     this.tripsDataList = this.tripDataService.updateProduct(trip, "availableSeats", newValue);
-    this.myActualReservations--;
+    this.reservationsCount--;
   }
 
-  removeTrip(tripToRemove: TripStructure) {
-    this.tripsDataList = this.tripDataService.deleteProduct(tripToRemove);
-    this.myActualReservations = this.myActualReservations - (tripToRemove.maxSeats - tripToRemove.availableSeats);
+  removeTrip(trip: TripStructure) {
+    this.tripsDataList = this.tripDataService.deleteProduct(trip);
+    this.reservationsCount = this.reservationsCount - (trip.maxSeats - trip.availableSeats);
     this.findBorderTrips();
   }
 

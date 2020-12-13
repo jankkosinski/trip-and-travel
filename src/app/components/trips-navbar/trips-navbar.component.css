@@ -1,3 +1,33 @@
 .spacer {
-    flex: 1 1 auto;
-  }
+  flex: 1 1 auto;
+}
+
+.bg-basic {
+  background-color: #26a69a;
+  color: whitesmoke;
+  border: 1px solid #26a69a;
+  animation-name: special-off;
+  animation-duration: 3s;
+}
+
+.bg-special {
+  background-color: #26a66a;
+  color: whitesmoke;
+  border: 1px solid white;
+  animation-name: special-on;
+  animation-duration: 3s;
+}
+
+@keyframes special-on {
+  0%   {background-color:  #26a69a; border: 1px solid #26a69a;}
+  25%  {background-color:   #26a66a; border: 1px solid  #26a66a;}
+  50%  {background-color:  #26a66a; border: 1px solid white;}
+  100% {background-color:   #26a66a; border: 1px solid white;}
+}
+
+@keyframes special-off {
+  0%   {background-color:  #26a66a; border: 1px solid white;}
+  25% {background-color:   #26a69a; border: 1px solid white;}
+  50% {background-color:   #26a69a; border: 1px solid#26a69a;}
+  100% {background-color:   #26a69a; border: 1px solid#26a69a;}
+}

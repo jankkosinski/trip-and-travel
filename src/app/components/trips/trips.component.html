@@ -1,18 +1,25 @@
-<app-trips-navbar [reservations]="myActualReservations"></app-trips-navbar>
+<app-trips-navbar 
+    [reservationsCount]="reservationsCount"
+    (openCartSidebar)="drawer.toggle()">
+</app-trips-navbar>
 
-<div class="container">
-    <div class="row z-depth-3 bg-light" 
-        *ngFor="let item of tripsDataList" 
-        [style] = "borderPrices.high.trips.includes(item) ? 'border: 4px solid green' : '' || borderPrices.low.trips.includes(item) ? 'border: 4px solid red' : ''" >
-        <app-trip-details 
-            [trip]="item" 
-            (onAddReservation)="addTripReservation($event)" 
-            (onRemoveReservation)="removeTripReservation($event)" 
-            (onRemoveTrip)="removeTrip($event)"
-            (onRateTrip)="rateTrip(item,$event)">
-        </app-trip-details>
+<mat-drawer-container autosize>
+    <mat-drawer #drawer mode="side" position="end">
+        <app-cart></app-cart>
+    </mat-drawer>
+
+    <div class="container">
+        <div class="row z-depth-3 bg-light" 
+            *ngFor="let item of tripsDataList" 
+            [style] = "borderPrices.high.trips.includes(item) ? 'border: 4px solid green' : '' || borderPrices.low.trips.includes(item) ? 'border: 4px solid red' : ''" >
+            <app-trip-details 
+                [trip]="item" 
+                (onAddReservation)="addTripReservation($event)" 
+                (onRemoveReservation)="removeTripReservation($event)" 
+                (onRemoveTrip)="removeTrip($event)"
+                (onRateTrip)="rateTrip(item,$event)">
+            </app-trip-details>
+        </div>
     </div>
-</div>
-<div>
-    <app-cart></app-cart>
-</div>
+  
+</mat-drawer-container>
