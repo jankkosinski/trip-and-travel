@@ -9,7 +9,9 @@
         Date: {{trip.start_date}} - {{trip.end_date}} <br>
         Price: {{trip.price | currency}}
         <br>
-        Seats: <span [style] = "checkColor(trip.availableSeats)"> {{trip.availableSeats}} / {{trip.maxSeats}}</span> 
+        Seats: <span [ngClass] = "{'no-seats': trip.availableSeats == 0, 'almost-empty': trip.availableSeats <= 3}"> 
+                    {{trip.availableSeats}} / {{trip.maxSeats}}
+                </span> 
         <span *ngIf = "trip.availableSeats == 0" class="no-seats"> - There is no available seats
         </span>
     </div>

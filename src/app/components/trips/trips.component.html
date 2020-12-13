@@ -1,8 +1,8 @@
-<app-trips-navbar [reservations]="actualReservations"></app-trips-navbar>
+<app-trips-navbar [reservations]="myActualReservations"></app-trips-navbar>
 
 <div class="container">
     <div class="row z-depth-3 bg-light" 
-        *ngFor="let item of example_trips" 
+        *ngFor="let item of tripsDataList" 
         [style] = "borderPrices.high.trips.includes(item) ? 'border: 4px solid green' : '' || borderPrices.low.trips.includes(item) ? 'border: 4px solid red' : ''" >
         <app-trip-details 
             [trip]="item" 

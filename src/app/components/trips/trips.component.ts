@@ -10,9 +10,8 @@ import { TripsDataService } from '../../services/trips-data.service';
 
 export class TripsComponent implements OnInit {
 
-  actualReservations = 0;
-
-  example_trips: TripStructure[] = [];
+  myActualReservations = 0;
+  tripsDataList: TripStructure[] = [];
 
   borderPrices = {
     low: {value: 0, trips: []}, 
@@ -22,59 +21,68 @@ export class TripsComponent implements OnInit {
   constructor(private tripDataService: TripsDataService) { }
 
   ngOnInit(): void {
-    for (let i = 0; i <  this.example_trips.length; i++) {
+    this.getTripsData();
+    this.findBorderTrips();
+  }
+
+  getTripsData(): void {
+    this.tripsDataList = this.tripDataService.getProducts();
+  }
+
+  findBorderTrips() {
+    for (let i = 0; i <  this.tripsDataList.length; i++) {
       if (i == 0) {
-        this.borderPrices.low.value = this.example_trips[i].price;
-        this.borderPrices.high.value = this.example_trips[i].price;
-        this.borderPrices.low.trips = [this.example_trips[i]];
-        this.borderPrices.high.trips = [this.example_trips[i]];
+        this.borderPrices.low.value = this.tripsDataList[i].price;
+        this.borderPrices.high.value = this.tripsDataList[i].price;
+        this.borderPrices.low.trips = [this.tripsDataList[i]];
+        this.borderPrices.high.trips = [this.tripsDataList[i]];
       } else {
-        if (this.example_trips[i].price > this.borderPrices.high.value) {
-          this.borderPrices.high.value = this.example_trips[i].price;
-          this.borderPrices.high.trips = [this.example_trips[i]];
-        } else if (this.example_trips[i].price == this.borderPrices.high.value) {
-          this.borderPrices.high.trips.push(this.example_trips[i]);
+        if (this.tripsDataList[i].price > this.borderPrices.high.value) {
+          this.borderPrices.high.value = this.tripsDataList[i].price;
+          this.borderPrices.high.trips = [this.tripsDataList[i]];
+        } else if (this.tripsDataList[i].price == this.borderPrices.high.value) {
+          this.borderPrices.high.trips.push(this.tripsDataList[i]);
         }
 
-        if (this.example_trips[i].price < this.borderPrices.low.value) {
-          this.borderPrices.low.value = this.example_trips[i].price;
-          this.borderPrices.low.trips = [this.example_trips[i]];
-        } else if (this.example_trips[i].price == this.borderPrices.low.value) {
-          this.borderPrices.low.trips.push(this.example_trips[i]);
+        if (this.tripsDataList[i].price < this.borderPrices.low.value) {
+          this.borderPrices.low.value = this.tripsDataList[i].price;
+          this.borderPrices.low.trips = [this.tripsDataList[i]];
+        } else if (this.tripsDataList[i].price == this.borderPrices.low.value) {
+          this.borderPrices.low.trips.push(this.tripsDataList[i]);
         }
       }
     }
   }
 
   addTripReservation(trip: TripStructure) {
-    let index = this.example_trips.indexOf(trip);
-    this.example_trips[index].availableSeats = this.example_trips[index].availableSeats - 1;
-    this.actualReservations++;
+    let index = this.tripsDataList.indexOf(trip);
+    this.tripsDataList[index].availableSeats = this.tripsDataList[index].availableSeats - 1;
+    this.myActualReservations++;
   }
 
   removeTripReservation(trip: TripStructure) {
-    let index = this.example_trips.indexOf(trip);
-    this.example_trips[index].availableSeats = this.example_trips[index].availableSeats + 1;
-    this.actualReservations--;
+    let index = this.tripsDataList.indexOf(trip);
+    this.tripsDataList[index].availableSeats = this.tripsDataList[index].availableSeats + 1;
+    this.myActualReservations--;
   }
 
   removeTrip(tripToRemove: TripStructure) {
-    this.example_trips = this.example_trips.filter(obj => obj !== tripToRemove);
-    this.actualReservations = this.actualReservations - (tripToRemove.maxSeats - tripToRemove.availableSeats);
+    this.tripsDataList = this.tripDataService.deleteProduct(tripToRemove);
+    this.myActualReservations = this.myActualReservations - (tripToRemove.maxSeats - tripToRemove.availableSeats);
+    this.findBorderTrips();
   }
 
   rateTrip(trip: TripStructure, rate: number) {
-    let index = this.example_trips.indexOf(trip);
-    let tripValueRate = this.example_trips[index].rate;
-    let tripValueRatedCount = this.example_trips[index].rated_count;
+    let index = this.tripsDataList.indexOf(trip);
+    let tripValueRate = this.tripsDataList[index].rate;
+    let tripValueRatedCount = this.tripsDataList[index].rated_count;
     let newValueRate;
     if (tripValueRatedCount == 0) {
       newValueRate = rate;
     } else {
       newValueRate = ((tripValueRate*tripValueRatedCount) + rate) / (tripValueRatedCount + 1);
     }
-    this.example_trips[index].rate = newValueRate;
-    this.example_trips[index].rated_count = tripValueRatedCount + 1;
+    this.tripsDataList[index].rate = newValueRate;
+    this.tripsDataList[index].rated_count = tripValueRatedCount + 1;
   }
-
 }

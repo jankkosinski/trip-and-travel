@@ -47,16 +47,6 @@ export class TripDetailsComponent implements OnInit {
     this.onRemoveTrip.emit(this.trip);
   }
 
-  checkColor (value) {
-    if (value == 0) {
-      return "color: red";
-    } else if (value <= 3) {
-      return "color: orange";
-    } else {
-      return "";
-    }
-  }
-
   getTripRate() {
     return (Math.round(this.trip.rate * 100) / 100).toFixed(2);
   }

@@ -1,5 +1,11 @@
+.almost-empty {
+    color: darkgoldenrod;
+    font-weight: bold;
+}
+
 .no-seats {
-    color: red;
+    color: darkred;
+    font-weight: bold;
 }
 
 .btn-margin {

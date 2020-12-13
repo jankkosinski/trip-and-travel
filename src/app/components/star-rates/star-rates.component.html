@@ -3,7 +3,7 @@
   (mouseenter)="onHover()"
   (mouseleave)="onLeave()">
   <i class="star-rating-blank large material-icons"
-    [ngClass]="{'star-rating-filled': rating >= starId, 'star-rating-blank': rating <starId,'star-rating-hover': hover >= starId}">
+    [ngClass]="{'star-rating-filled': rating >= starId, 'star-rating-blank': rating < starId,'star-rating-hover': hover >= starId}">
     star
   </i>
 </div>
