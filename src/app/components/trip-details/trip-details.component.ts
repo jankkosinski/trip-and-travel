@@ -19,35 +19,35 @@ export class TripDetailsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  stars = [1, 2, 3, 4, 5];
-  hoverState = 0;
+  stars: number[] = [1, 2, 3, 4, 5];
+  hoverState: number = 0;
 
-  hoverStar(starId) {
+  hoverStar(starId): void {
     this.hoverState = starId;
   }
 
-  clearStarHover() {
+  clearStarHover(): void {
     this.hoverState = 0;
   }
 
-  updateRating(starId) {
+  updateRating(starId): void {
     this.hoverState = 0;
     this.onRateTrip.emit(starId);
   }
 
-  addReservation () {
+  addReservation(): void {
     this.onAddReservation.emit(this.trip);
   }
 
-  removeReservation () {
+  removeReservation(): void {
     this.onRemoveReservation.emit(this.trip);
   }
 
-  removeTrip () {
+  removeTrip(): void {
     this.onRemoveTrip.emit(this.trip);
   }
 
-  getTripRate() {
+  getTripRate(): string {
     return (Math.round(this.trip.rate * 100) / 100).toFixed(2);
   }
 

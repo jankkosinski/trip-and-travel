@@ -8,9 +8,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class StarRatesComponent implements OnInit {
 
   starClassName = "star-rating-blank";
-  @Input() starId;
-  @Input() rating;
-  @Input() hover;
+  @Input() starId: number;
+  @Input() rating: number;
+  @Input() hover: number;
 
   @Output() leave: EventEmitter<number> = new EventEmitter();
   @Output() hoverStar: EventEmitter<number> = new EventEmitter();
@@ -18,21 +18,21 @@ export class StarRatesComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (this.rating >= this.starId) {
       this.starClassName = "star-rating-filled";
     }
   }
 
-  onHover() {
+  onHover(): void {
     this.hoverStar.emit(this.starId);
   }
 
-  onLeave() {
+  onLeave(): void {
     this.leave.emit();
   }
 
-  starClicked() {
+  starClicked(): void {
     this.bigClick.emit(this.starId);
   }
 

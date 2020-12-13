@@ -10,7 +10,7 @@ import { TripsDataService } from '../../services/trips-data.service';
 
 export class TripsComponent implements OnInit {
 
-  reservationsCount = 0;
+  reservationsCount: number = 0;
   tripsDataList: TripStructure[] = <TripStructure[]>[];
   borderPrices: BorderTrips = <BorderTrips>{};
 
@@ -55,27 +55,27 @@ export class TripsComponent implements OnInit {
     }
   }
 
-  addTripReservation(trip: TripStructure) {
+  addTripReservation(trip: TripStructure): void {
     let newValue = trip.availableSeats - 1;
     this.tripsDataList = this.tripDataService.updateProduct(trip, "availableSeats", newValue);
     this.reservationsCount++;
   }
 
-  removeTripReservation(trip: TripStructure) {
+  removeTripReservation(trip: TripStructure): void {
     let newValue = trip.availableSeats + 1;
     this.tripsDataList = this.tripDataService.updateProduct(trip, "availableSeats", newValue);
     this.reservationsCount--;
   }
 
-  removeTrip(trip: TripStructure) {
+  removeTrip(trip: TripStructure): void {
     this.tripsDataList = this.tripDataService.deleteProduct(trip);
     this.reservationsCount = this.reservationsCount - (trip.maxSeats - trip.availableSeats);
     this.findBorderTrips();
   }
 
-  rateTrip(trip: TripStructure, rate: number) {
-    let tripValueRate = trip.rate;
-    let tripValueRatedCount = trip.rated_count;
+  rateTrip(trip: TripStructure, rate: number): void {
+    let tripValueRate: number = trip.rate;
+    let tripValueRatedCount: number = trip.rated_count;
     let newValueRate;
     if (tripValueRatedCount == 0) {
       newValueRate = rate;
