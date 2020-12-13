@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Reservation } from 'src/app/models/reservation_structure';
+import { TripsReservationService } from "../../services/trips-reservation.service"
 
 @Component({
   selector: 'app-cart',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CartComponent implements OnInit {
 
-  constructor() { }
+  reservationsData: Reservation[] = <Reservation[]>[];
+
+  constructor(private tripsReservationServise: TripsReservationService) { }
 
   ngOnInit(): void {
+    this.getReservations();
+  }
+
+  getReservations(): void {
+    this.reservationsData = this.tripsReservationServise.getReservations();
   }
 
 }

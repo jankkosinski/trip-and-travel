@@ -57,19 +57,27 @@ export class TripsComponent implements OnInit {
 
   addTripReservation(trip: TripStructure): void {
     let newValue = trip.availableSeats - 1;
+    if (trip.availableSeats == trip.maxSeats) {
+
+    }
     this.tripsDataList = this.tripDataService.updateProduct(trip, "availableSeats", newValue);
     this.reservationsCount++;
   }
 
   removeTripReservation(trip: TripStructure): void {
     let newValue = trip.availableSeats + 1;
+    if (newValue == trip.maxSeats) {
+
+    }
     this.tripsDataList = this.tripDataService.updateProduct(trip, "availableSeats", newValue);
     this.reservationsCount--;
   }
 
   removeTrip(trip: TripStructure): void {
+    if (trip.availableSeats != trip.maxSeats) {
+      this.reservationsCount = this.reservationsCount - (trip.maxSeats - trip.availableSeats);
+    }
     this.tripsDataList = this.tripDataService.deleteProduct(trip);
-    this.reservationsCount = this.reservationsCount - (trip.maxSeats - trip.availableSeats);
     this.findBorderTrips();
   }
 
