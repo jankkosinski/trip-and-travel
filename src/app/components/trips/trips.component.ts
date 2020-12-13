@@ -11,12 +11,8 @@ import { TripsDataService } from '../../services/trips-data.service';
 export class TripsComponent implements OnInit {
 
   myActualReservations = 0;
-  tripsDataList: TripStructure[] = [];
-
-  borderPrices = {
-    low: {value: 0, trips: []}, 
-    high: {value: 0, trips: []}
-  };
+  tripsDataList: TripStructure[] = <TripStructure[]>[];
+  borderPrices: BorderTrips = <BorderTrips>{};
 
   constructor(private tripDataService: TripsDataService) { }
 
@@ -29,14 +25,19 @@ export class TripsComponent implements OnInit {
     this.tripsDataList = this.tripDataService.getProducts();
   }
 
-  findBorderTrips() {
-    for (let i = 0; i <  this.tripsDataList.length; i++) {
-      if (i == 0) {
-        this.borderPrices.low.value = this.tripsDataList[i].price;
-        this.borderPrices.high.value = this.tripsDataList[i].price;
-        this.borderPrices.low.trips = [this.tripsDataList[i]];
-        this.borderPrices.high.trips = [this.tripsDataList[i]];
-      } else {
+  findBorderTrips(): void {
+    this.borderPrices = {
+      low: {
+        value: this.tripsDataList[0].price,
+        trips: [this.tripsDataList[0]]
+      },
+      high: {
+        value: this.tripsDataList[0].price,
+        trips: [this.tripsDataList[0]]
+      }
+    }
+    for (let i = 1; i <  this.tripsDataList.length; i++) {
+
         if (this.tripsDataList[i].price > this.borderPrices.high.value) {
           this.borderPrices.high.value = this.tripsDataList[i].price;
           this.borderPrices.high.trips = [this.tripsDataList[i]];
@@ -50,19 +51,19 @@ export class TripsComponent implements OnInit {
         } else if (this.tripsDataList[i].price == this.borderPrices.low.value) {
           this.borderPrices.low.trips.push(this.tripsDataList[i]);
         }
-      }
+      
     }
   }
 
   addTripReservation(trip: TripStructure) {
-    let index = this.tripsDataList.indexOf(trip);
-    this.tripsDataList[index].availableSeats = this.tripsDataList[index].availableSeats - 1;
+    let newValue = trip.availableSeats - 1;
+    this.tripsDataList = this.tripDataService.updateProduct(trip, "availableSeats", newValue);
     this.myActualReservations++;
   }
 
   removeTripReservation(trip: TripStructure) {
-    let index = this.tripsDataList.indexOf(trip);
-    this.tripsDataList[index].availableSeats = this.tripsDataList[index].availableSeats + 1;
+    let newValue = trip.availableSeats + 1;
+    this.tripsDataList = this.tripDataService.updateProduct(trip, "availableSeats", newValue);
     this.myActualReservations--;
   }
 
@@ -73,16 +74,27 @@ export class TripsComponent implements OnInit {
   }
 
   rateTrip(trip: TripStructure, rate: number) {
-    let index = this.tripsDataList.indexOf(trip);
-    let tripValueRate = this.tripsDataList[index].rate;
-    let tripValueRatedCount = this.tripsDataList[index].rated_count;
+    let tripValueRate = trip.rate;
+    let tripValueRatedCount = trip.rated_count;
     let newValueRate;
     if (tripValueRatedCount == 0) {
       newValueRate = rate;
     } else {
       newValueRate = ((tripValueRate*tripValueRatedCount) + rate) / (tripValueRatedCount + 1);
     }
-    this.tripsDataList[index].rate = newValueRate;
-    this.tripsDataList[index].rated_count = tripValueRatedCount + 1;
+    tripValueRatedCount++;
+    this.tripsDataList = this.tripDataService.updateProduct(trip, "rate", newValueRate);
+    this.tripsDataList = this.tripDataService.updateProduct(trip, "rated_count", tripValueRatedCount);
+  }
+}
+
+export interface BorderTrips {
+  low: {
+    value: number;
+    trips: TripStructure[];
+  }
+  high: {
+    value: number;
+    trips: TripStructure[];
   }
 }

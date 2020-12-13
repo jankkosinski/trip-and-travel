@@ -32,4 +32,10 @@ export class TripsDataService {
     return this.tripsDataList;
    }
 
+   updateProduct(trip: TripStructure, key: string, newValue): TripStructure[] {
+    let index = this.tripsDataList.indexOf(trip);
+    this.tripsDataList[index][key] = newValue;
+    return this.tripsDataList;
+   }
+
 }
