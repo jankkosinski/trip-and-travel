@@ -14,6 +14,7 @@ export class TripsComponent implements OnInit {
 
   reservationsCount: number = 0;
   tripsDataList: TripStructure[] = <TripStructure[]>[];
+  reservationsData: Reservation[] = <Reservation[]>[];
   borderPrices: BorderTrips = <BorderTrips>{};
 
   constructor(private tripDataService: TripsDataService,
@@ -22,10 +23,15 @@ export class TripsComponent implements OnInit {
   ngOnInit(): void {
     this.getTripsData();
     this.findBorderTrips();
+    this.getReservations();
   }
 
   getTripsData(): void {
     this.tripsDataList = this.tripDataService.getProducts();
+  }
+
+  getReservations(): void {
+    this.reservationsData = this.tripsReservationServise.getReservations();
   }
 
   findBorderTrips(): void {
@@ -61,19 +67,11 @@ export class TripsComponent implements OnInit {
   addTripReservation(trip: TripStructure): void {
     let newValue = trip.availableSeats - 1;
     if (trip.availableSeats == trip.maxSeats) {
-      let newReservation: Reservation = {
-        trip: trip,
-        reservations_count: 1
-      }
-      this.tripsReservationServise.addTripReservation(newReservation);
+      this.reservationsData = this.tripsReservationServise.addTripReservation(trip);
     } else {
-      let actualValue = trip.maxSeats - trip.availableSeats;
-      let actualReservation: Reservation = {
-        trip: trip,
-        reservations_count: actualValue
-      }
-      this.tripsReservationServise.addReservation(actualReservation)
+      this.reservationsData = this.tripsReservationServise.addReservation(trip);
     }
+    console.log(this.reservationsData)
     this.tripsDataList = this.tripDataService.updateProduct(trip, "availableSeats", newValue);
     this.reservationsCount++;
   }
@@ -81,8 +79,11 @@ export class TripsComponent implements OnInit {
   removeTripReservation(trip: TripStructure): void {
     let newValue = trip.availableSeats + 1;
     if (newValue == trip.maxSeats) {
-
+      this.reservationsData = this.tripsReservationServise.deleteTripReservation(trip);
+    } else {
+      this.reservationsData = this.tripsReservationServise.removeReservation(trip);
     }
+    console.log(this.reservationsData)
     this.tripsDataList = this.tripDataService.updateProduct(trip, "availableSeats", newValue);
     this.reservationsCount--;
   }
