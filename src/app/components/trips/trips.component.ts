@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TripStructure } from '../../models/trips_structure';
+import {Reservation} from "../../models/reservation_structure"
 import { TripsDataService } from '../../services/trips-data.service';
+import { TripsReservationService } from "../../services/trips-reservation.service"
 
 @Component({
   selector: 'app-trips',
@@ -14,7 +16,8 @@ export class TripsComponent implements OnInit {
   tripsDataList: TripStructure[] = <TripStructure[]>[];
   borderPrices: BorderTrips = <BorderTrips>{};
 
-  constructor(private tripDataService: TripsDataService) { }
+  constructor(private tripDataService: TripsDataService,
+              private tripsReservationServise: TripsReservationService) { }
 
   ngOnInit(): void {
     this.getTripsData();
@@ -58,7 +61,18 @@ export class TripsComponent implements OnInit {
   addTripReservation(trip: TripStructure): void {
     let newValue = trip.availableSeats - 1;
     if (trip.availableSeats == trip.maxSeats) {
-
+      let newReservation: Reservation = {
+        trip: trip,
+        reservations_count: 1
+      }
+      this.tripsReservationServise.addTripReservation(newReservation);
+    } else {
+      let actualValue = trip.maxSeats - trip.availableSeats;
+      let actualReservation: Reservation = {
+        trip: trip,
+        reservations_count: actualValue
+      }
+      this.tripsReservationServise.addReservation(actualReservation)
     }
     this.tripsDataList = this.tripDataService.updateProduct(trip, "availableSeats", newValue);
     this.reservationsCount++;
