@@ -15,16 +15,23 @@ export class TripsComponent implements OnInit {
   tripsDataList: TripStructure[] = <TripStructure[]>[];
   borderPrices: BorderTrips = <BorderTrips>{};
 
-  constructor(private tripDataService: TripsDataService,
-              private tripsReservationServise: TripsReservationService) { }
-
-  ngOnInit(): void {
-    this.getTripsData();
-    this.findBorderTrips();
+  constructor(private tripDataService: TripsDataService, private tripsReservationServise: TripsReservationService) {
+    this.tripDataService.getProducts().subscribe(
+      tripDataListStream => this.tripsDataList = tripDataListStream
+    )
+    this.tripsReservationServise.getReservations().subscribe(
+      reservationStream => {
+        let newReservationCount = 0;
+        for (let i = 0; i < reservationStream.length; i++) {
+          newReservationCount = newReservationCount + reservationStream[i].reservations_count;
+        }
+        this.reservationsCount = newReservationCount;
+      }
+    )
   }
 
-  getTripsData(): void {
-    this.tripsDataList = this.tripDataService.getProducts();
+  ngOnInit(): void {
+    this.findBorderTrips();
   }
 
   findBorderTrips(): void {
@@ -64,8 +71,7 @@ export class TripsComponent implements OnInit {
     } else {
       this.tripsReservationServise.addReservation(trip);
     }
-    this.tripsDataList = this.tripDataService.updateProduct(trip, "availableSeats", newValue);
-    this.reservationsCount++;
+    this.tripDataService.updateProduct(trip, "availableSeats", newValue);
   }
 
   removeTripReservation(trip: TripStructure): void {
@@ -75,16 +81,12 @@ export class TripsComponent implements OnInit {
     } else {
       this.tripsReservationServise.removeReservation(trip);
     }
-    this.tripsDataList = this.tripDataService.updateProduct(trip, "availableSeats", newValue);
-    this.reservationsCount--;
+    this.tripDataService.updateProduct(trip, "availableSeats", newValue);
   }
 
   removeTrip(trip: TripStructure): void {
-    if (trip.availableSeats != trip.maxSeats) {
-      this.reservationsCount = this.reservationsCount - (trip.maxSeats - trip.availableSeats);
-    }
     this.tripsReservationServise.deleteTripReservation(trip);
-    this.tripsDataList = this.tripDataService.deleteProduct(trip);
+    this.tripDataService.deleteProduct(trip);
     this.findBorderTrips();
   }
 
@@ -98,8 +100,8 @@ export class TripsComponent implements OnInit {
       newValueRate = ((tripValueRate*tripValueRatedCount) + rate) / (tripValueRatedCount + 1);
     }
     tripValueRatedCount++;
-    this.tripsDataList = this.tripDataService.updateProduct(trip, "rate", newValueRate);
-    this.tripsDataList = this.tripDataService.updateProduct(trip, "rated_count", tripValueRatedCount);
+    this.tripDataService.updateProduct(trip, "rate", newValueRate);
+    this.tripDataService.updateProduct(trip, "rated_count", tripValueRatedCount);
   }
 }
 

@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter} from '@angular/core';
 import { Reservation } from 'src/app/models/reservation_structure';
 import { TripStructure } from '../../models/trips_structure';
 import { TripsReservationService } from "../../services/trips-reservation.service"
+import { TripsDataService } from '../../services/trips-data.service';
 
 @Component({
   selector: 'app-cart',
@@ -15,7 +16,7 @@ export class CartComponent implements OnInit {
   reservationsData: Reservation[] = <Reservation[]>[];
   cartValue: number = 0;
 
-  constructor(private tripsReservationServise: TripsReservationService) { 
+  constructor(private tripsReservationServise: TripsReservationService, private tripDataService: TripsDataService) { 
     this.tripsReservationServise.getReservations().subscribe(
       reservationStream => {
         this.reservationsData = reservationStream;
@@ -33,6 +34,7 @@ export class CartComponent implements OnInit {
 
   removeReservation(trip: TripStructure): void {
     this.tripsReservationServise.deleteTripReservation(trip);
+    this.tripDataService.updateProduct(trip, "availableSeats", trip.maxSeats);
   }
 
   close(): void {

@@ -1,41 +1,45 @@
 import { Injectable } from '@angular/core';
 import { TripStructure } from '../models/trips_structure';
 import { EXAMPLE_TRIPS } from '../models/trips-data';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TripsDataService {
 
-  private tripsDataList: TripStructure[] = [];
-
+  private tripsDataList =  new BehaviorSubject<TripStructure[]>([]);
+  
   constructor() {
-    this.tripsDataList = EXAMPLE_TRIPS;
+    this.tripsDataList.next(EXAMPLE_TRIPS);
    }
 
-   getProducts(): TripStructure[] {
-    return this.tripsDataList;
+   getProducts(): Observable<TripStructure[]> {
+    return this.tripsDataList.asObservable();
    }
 
-   getProduct(trip: TripStructure): TripStructure {
-    let index = this.tripsDataList.indexOf(trip);
-    return this.tripsDataList[index];
+   getProduct(trip: TripStructure) {
+    let index = this.tripsDataList.getValue().indexOf(trip);
+    return this.tripsDataList[index].asObservable();
    }
 
-   addProduct(trip: TripStructure): TripStructure[] {
-     this.tripsDataList.push(trip);
-     return this.tripsDataList;
+   addProduct(trip: TripStructure) {
+     let actualTripsData = this.tripsDataList.getValue();
+     actualTripsData.push(trip);
+     this.tripsDataList.next(actualTripsData);
    }
 
-   deleteProduct(trip: TripStructure): TripStructure[] {
-    this.tripsDataList = this.tripsDataList.filter(obj => obj !== trip);
-    return this.tripsDataList;
+   deleteProduct(trip: TripStructure) {
+    let actualTripsData = this.tripsDataList.getValue();
+    actualTripsData = actualTripsData.filter(obj => obj !== trip);
+    this.tripsDataList.next(actualTripsData);
    }
 
-   updateProduct(trip: TripStructure, key: string, newValue): TripStructure[] {
-    let index = this.tripsDataList.indexOf(trip);
-    this.tripsDataList[index][key] = newValue;
-    return this.tripsDataList;
+   updateProduct(trip: TripStructure, key: string, newValue) {
+    let actualTripsData = this.tripsDataList.getValue();
+    let index = actualTripsData.indexOf(trip);
+    actualTripsData[index][key] = newValue;
+    this.tripsDataList.next(actualTripsData);
    }
 
 }

@@ -8,7 +8,7 @@ import { TripStructure } from '../models/trips_structure';
 })
 export class TripsReservationService {
 
-  reservationsData = new BehaviorSubject<Reservation[]>([]);
+  private reservationsData = new BehaviorSubject<Reservation[]>([]);
 
   constructor() { }
 
