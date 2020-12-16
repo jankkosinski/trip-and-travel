@@ -12,44 +12,44 @@
         <form>
             <mat-form-field class="full-width">
                 <mat-label>Name</mat-label>
-                <input type="text" matInput>
+                <input [(ngModel)]="trip.name" name="name" type="text" matInput>
             </mat-form-field>
 
             <mat-form-field class="full-width">
                 <mat-label>Destination</mat-label>
-                <input type="text" matInput>
+                <input [(ngModel)]="trip.destination" name="destination" type="text" matInput>
             </mat-form-field>
 
             <mat-form-field class="half-width">
                 <mat-label>Start Date</mat-label>
-                <input type="date" matInput>
+                <input [(ngModel)]="trip.start_date" name="start_date" type="date" matInput>
             </mat-form-field>
 
             <mat-form-field class="half-width">
                 <mat-label>End Date</mat-label>
-                <input type="date" matInput>
+                <input [(ngModel)]="trip.end_date" name="end_date" type="date" matInput>
             </mat-form-field>
 
             <mat-form-field class="half-width">
                 <mat-label>Price</mat-label>
-                <input type="number" matInput>
+                <input [(ngModel)]="trip.price" name="price" type="number" matInput>
                 <span matPrefix>$&nbsp;</span>
             </mat-form-field>
 
             <mat-form-field class="half-width">
                 <mat-label>Seats</mat-label>
-                <input type="number" matInput>
+                <input [(ngModel)]="trip.maxSeats" [(ngModel)]="trip.availableSeats" name="max_seats" type="number" matInput>
             </mat-form-field>
 
             <mat-form-field class="full-width">
                 <mat-label>Description</mat-label>
-                <textarea type="text" matInput></textarea>
+                <textarea [(ngModel)]="trip.description" name="description" type="text" matInput></textarea>
               </mat-form-field>
 
               <div class="file-field input-field">
                 <div class="btn">
                   <span>{{"upload photo" | uppercase}}</span>
-                  <input type="file">
+                  <input [(ngModel)]="trip.img" name="upload" type="file">
                 </div>
                 <div class="file-path-wrapper">
                   <input class="file-path validate" type="text">
@@ -58,11 +58,11 @@
 
         </form>
 
-        <button class="btn-large waves-effect waves-light m5 ml0">
+        <button class="btn-large waves-effect waves-light m5 ml0" (click)="saveNewTrip()">
             Save
         </button>
 
-        <button class="btn-large red waves-effect waves-light m5">
+        <button class="btn-large red waves-effect waves-light m5" (click)="clearData()">
             Clear
         </button>
         
