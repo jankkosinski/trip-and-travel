@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {Reservation} from "../models/reservation_structure"
 import { TripStructure } from '../models/trips_structure';
 
@@ -7,40 +8,44 @@ import { TripStructure } from '../models/trips_structure';
 })
 export class TripsReservationService {
 
-  reservationsData: Reservation[] = [];
+  reservationsData = new BehaviorSubject<Reservation[]>([]);
 
   constructor() { }
 
-  getReservations(): Reservation[] {
-    return this.reservationsData;
+  getReservations(): Observable<Reservation[]> {
+    return this.reservationsData.asObservable();
   }
 
-  addTripReservation(trip: TripStructure): Reservation[] {
+  addTripReservation(trip: TripStructure) {
     let newReservation: Reservation = {
       trip: trip,
       reservations_count: 1
     }
-    this.reservationsData.push(newReservation);
-    return this.reservationsData;
+    let actualReservationData = this.reservationsData.getValue();
+    actualReservationData.push(newReservation);
+    this.reservationsData.next(actualReservationData);
   }
 
-  deleteTripReservation(trip: TripStructure): Reservation[] {
-    this.reservationsData = this.reservationsData.filter(obj => obj.trip !== trip);
-    return this.reservationsData;
+  deleteTripReservation(trip: TripStructure) {
+    let actualReservationData = this.reservationsData.getValue();
+    actualReservationData = actualReservationData.filter(obj => obj.trip !== trip);
+    this.reservationsData.next(actualReservationData);
   }
 
-  addReservation(trip: TripStructure): Reservation[] {
-    let index = this.reservationsData.findIndex(obj => obj.trip === trip);
-    let newValue = this.reservationsData[index].reservations_count + 1;
-    this.reservationsData[index].reservations_count = newValue;
-    return this.reservationsData;
+  addReservation(trip: TripStructure) {
+    let actualReservationData = this.reservationsData.getValue();
+    let index = actualReservationData.findIndex(obj => obj.trip === trip);
+    let newValue = actualReservationData[index].reservations_count + 1;
+    actualReservationData[index].reservations_count = newValue;
+    this.reservationsData.next(actualReservationData);
   }
 
-  removeReservation(trip: TripStructure): Reservation[] {
-    let index = this.reservationsData.findIndex(obj => obj.trip === trip);
-    let newValue = this.reservationsData[index].reservations_count - 1;
-    this.reservationsData[index].reservations_count = newValue;
-    return this.reservationsData;
+  removeReservation(trip: TripStructure) {
+    let actualReservationData = this.reservationsData.getValue();
+    let index = actualReservationData.findIndex(obj => obj.trip === trip);
+    let newValue = actualReservationData[index].reservations_count - 1;
+    actualReservationData[index].reservations_count = newValue;
+    this.reservationsData.next(actualReservationData);
   }
 
 }

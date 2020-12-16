@@ -1,11 +1,14 @@
 <app-trips-navbar 
     [reservationsCount]="reservationsCount"
-    (openCartSidebar)="drawer.toggle()">
+    (openCartSidebar)="drawer.open()">
 </app-trips-navbar>
 
 <mat-drawer-container autosize>
     <mat-drawer #drawer mode="side" position="end">
-        <app-cart></app-cart>
+        <app-cart 
+        *ngIf="reservationsCount!=0"
+        (closeCart)="drawer.close()">
+        </app-cart>
     </mat-drawer>
 
     <div class="container">
