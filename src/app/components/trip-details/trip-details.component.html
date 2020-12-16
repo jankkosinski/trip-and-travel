@@ -28,16 +28,19 @@
     </button>
 </div>
 <div class="col s12 m8 l8" style="float: right;">
-    <ng-container *ngFor="let star of stars">
-        <app-star-rates
-            [starId]="star" 
-            [rating]="trip.rate"
-            [hover]="hoverState" 
-            (hoverStar)="hoverStar($event)" 
-            (leave)="clearStarHover()"
-            (bigClick)="updateRating($event)">
-        </app-star-rates>
-    </ng-container>
+    <div class="ml5 mb-5">
+        <ng-container *ngFor="let star of stars">
+            <app-star-rates
+            class="btn-margin-1"
+                [starId]="star" 
+                [rating]="trip.rate"
+                [hover]="hoverState" 
+                (hoverStar)="hoverStar($event)" 
+                (leave)="clearStarHover()"
+                (bigClick)="updateRating($event)">
+            </app-star-rates>
+        </ng-container>
+    </div>
     <div>
         Rate: {{getTripRate()}} / 5 <br>
         Voted: {{trip.rated_count}}

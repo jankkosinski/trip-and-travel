@@ -1,14 +1,14 @@
 export interface TripStructure {
     id: number;
-    name: string;
-    destination: string;
-    start_date: string;
-    end_date: string;
+    name: String;
+    destination: String;
+    start_date: String;
+    end_date: String;
     price: number;
     availableSeats: number;
     maxSeats: number;
-    description: string;
-    img: string;
+    description: String;
+    img: String;
     rate: number;
     rated_count: number;
 }

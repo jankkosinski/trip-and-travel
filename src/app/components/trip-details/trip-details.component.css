@@ -12,6 +12,10 @@
     margin: 5px;
 }
 
+.btn-margin-1 {
+    margin: 1px;
+}
+
 .mb-5 {
     margin-bottom: 20px;
 }
@@ -19,6 +23,10 @@
 .img-h-still {
     object-fit: cover;
     height: 15vw;
+}
+
+.ml5 {
+    margin-left: 5px;
 }
 
 @media (max-width: 600px) {

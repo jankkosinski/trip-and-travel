@@ -17,7 +17,10 @@ export class TripsComponent implements OnInit {
 
   constructor(private tripDataService: TripsDataService, private tripsReservationServise: TripsReservationService) {
     this.tripDataService.getProducts().subscribe(
-      tripDataListStream => this.tripsDataList = tripDataListStream
+      tripDataListStream => {
+        this.tripsDataList = tripDataListStream;
+        this.findBorderTrips();
+      }
     )
     this.tripsReservationServise.getReservations().subscribe(
       reservationStream => {

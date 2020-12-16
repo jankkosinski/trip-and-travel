@@ -1,6 +1,6 @@
 <mat-accordion>
-    <mat-expansion-panel (opened)="panelOpenState= true"
-        (closed)="panelOpenState= false">
+    <mat-expansion-panel [expanded]="panelOpenState" (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false">
         <mat-expansion-panel-header>
 
             <mat-panel-description>
@@ -12,47 +12,47 @@
         <form>
             <mat-form-field class="full-width">
                 <mat-label>Name</mat-label>
-                <input [(ngModel)]="trip.name" name="name" type="text" matInput>
+                <input [(ngModel)]="name" name="name" type="text" matInput>
             </mat-form-field>
 
             <mat-form-field class="full-width">
                 <mat-label>Destination</mat-label>
-                <input [(ngModel)]="trip.destination" name="destination" type="text" matInput>
+                <input [(ngModel)]="destination" name="destination" type="text" matInput>
             </mat-form-field>
 
             <mat-form-field class="half-width">
                 <mat-label>Start Date</mat-label>
-                <input [(ngModel)]="trip.start_date" name="start_date" type="date" matInput>
+                <input [(ngModel)]="start_date" name="start_date" type="date" matInput>
             </mat-form-field>
 
             <mat-form-field class="half-width">
                 <mat-label>End Date</mat-label>
-                <input [(ngModel)]="trip.end_date" name="end_date" type="date" matInput>
+                <input [(ngModel)]="end_date" name="end_date" type="date" matInput>
             </mat-form-field>
 
             <mat-form-field class="half-width">
                 <mat-label>Price</mat-label>
-                <input [(ngModel)]="trip.price" name="price" type="number" matInput>
+                <input [(ngModel)]="price" name="price" type="text" matInput>
                 <span matPrefix>$&nbsp;</span>
             </mat-form-field>
 
             <mat-form-field class="half-width">
                 <mat-label>Seats</mat-label>
-                <input [(ngModel)]="trip.maxSeats" [(ngModel)]="trip.availableSeats" name="max_seats" type="number" matInput>
+                <input [(ngModel)]="maxSeats" [(ngModel)]="availableSeats" name="max_seats" type="number" matInput>
             </mat-form-field>
 
             <mat-form-field class="full-width">
                 <mat-label>Description</mat-label>
-                <textarea [(ngModel)]="trip.description" name="description" type="text" matInput></textarea>
+                <textarea [(ngModel)]="description" name="description" type="text" matInput></textarea>
               </mat-form-field>
 
               <div class="file-field input-field">
                 <div class="btn">
                   <span>{{"upload photo" | uppercase}}</span>
-                  <input [(ngModel)]="trip.img" name="upload" type="file">
+                  <input #uploadFile name="upload" type="file" (change)="onSelectFile($event)">
                 </div>
                 <div class="file-path-wrapper">
-                  <input class="file-path validate" type="text">
+                  <input class="file-path validate" type="text" [value]="fileStatus">
                 </div>
               </div>
 
