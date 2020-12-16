@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewTripComponent implements OnInit {
 
+  panelOpenState: boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {

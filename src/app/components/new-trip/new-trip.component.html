@@ -1,1 +1,70 @@
-<p>new-trip works!</p>
+<mat-accordion>
+    <mat-expansion-panel (opened)="panelOpenState= true"
+        (closed)="panelOpenState= false">
+        <mat-expansion-panel-header>
+
+            <mat-panel-description>
+                Add New Trip
+            </mat-panel-description>
+
+        </mat-expansion-panel-header>
+
+        <form>
+            <mat-form-field class="full-width">
+                <mat-label>Name</mat-label>
+                <input type="text" matInput>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Destination</mat-label>
+                <input type="text" matInput>
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+                <mat-label>Start Date</mat-label>
+                <input type="date" matInput>
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+                <mat-label>End Date</mat-label>
+                <input type="date" matInput>
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+                <mat-label>Price</mat-label>
+                <input type="number" matInput>
+                <span matPrefix>$&nbsp;</span>
+            </mat-form-field>
+
+            <mat-form-field class="half-width">
+                <mat-label>Seats</mat-label>
+                <input type="number" matInput>
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Description</mat-label>
+                <textarea type="text" matInput></textarea>
+              </mat-form-field>
+
+              <div class="file-field input-field">
+                <div class="btn">
+                  <span>{{"upload photo" | uppercase}}</span>
+                  <input type="file">
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text">
+                </div>
+              </div>
+
+        </form>
+
+        <button class="btn-large waves-effect waves-light m5 ml0">
+            Save
+        </button>
+
+        <button class="btn-large red waves-effect waves-light m5">
+            Clear
+        </button>
+        
+    </mat-expansion-panel>
+</mat-accordion>
