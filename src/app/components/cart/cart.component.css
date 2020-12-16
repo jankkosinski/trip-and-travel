@@ -9,3 +9,21 @@
 .mr2 {
     margin-right: 2px;
 }
+
+.mr0 {
+    margin-right: 0;
+}
+
+.mt2 {
+    margin-top: 2px;
+}
+
+.cart-view {
+    margin: 1px;
+}
+
+@media (max-width: 992px) {
+    .cart-view {
+        width: 100vw;
+    }
+}

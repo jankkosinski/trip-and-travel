@@ -1,11 +1,12 @@
-<div class="m5 p5">
+<div class="cart-view m5 p5">
     <h5>Reservations</h5>
     <div class="z-depth-1 card m5 p5"
         *ngFor="let item of reservationsData">
-        <div class="">
-            {{item.trip.name}} / {{item.reservations_count}} 
+        {{item.trip.name}} 
+        <span class="new badge">{{item.reservations_count}}</span>
+        <div>
             <button 
-                class="btn-small red waves-effect waves-light m5" 
+                class="btn-small red waves-effect waves-light mt2" 
                 (click)="removeReservation(item.trip)">
                 <i class="material-icons small">delete_forever</i>
             </button>
@@ -13,9 +14,6 @@
     </div>
     <h6 class="m5">Cost: {{cartValue | currency}}</h6>
     <div class="m5">
-        <button class="btn waves-effect waves-light mr2">
-            Purchase
-        </button>
         <button class="btn waves-effect waves-light" (click)="close()">
             Close
         </button>
