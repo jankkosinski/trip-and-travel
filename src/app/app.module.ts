@@ -21,6 +21,8 @@ import { StarRatesComponent } from './components/star-rates/star-rates.component
 import { CartComponent } from './components/cart/cart.component';
 import { NewTripComponent } from './components/new-trip/new-trip.component';
 import { FilterComponent } from './components/filter/filter.component';
+import { StartPanelComponent } from './components/start-panel/start-panel.component';
+import { TripPageComponent } from './components/trip-page/trip-page.component';
 
 
 
@@ -33,7 +35,9 @@ import { FilterComponent } from './components/filter/filter.component';
     StarRatesComponent,
     CartComponent,
     NewTripComponent,
-    FilterComponent
+    FilterComponent,
+    StartPanelComponent,
+    TripPageComponent
   ],
   imports: [
     BrowserModule,

@@ -129,49 +129,54 @@ export class TripsComponent implements OnInit {
 
   checkFilters(trip: TripStructure): boolean {
     let pass = true;
+    let passPrice = true;
+    let passDate = true;
+    let passRate = true;
     if (this.actualFilters.useFilerPrice) {
       if (trip.price < this.actualFilters.minFilterPrice || trip.price > this.actualFilters.maxFilterPrice) {
-        pass = false;
+        passPrice = false;
       }
     }
     if (this.actualFilters.useFilterDate) {
       if (new Date(trip.start_date.toString()) < new Date(this.actualFilters.startFilterDate.toString())) {
-        pass = false;
+        passDate = false;
       }
       if (new Date(trip.end_date.toString()) > new Date(this.actualFilters.endFilterDate.toString())) {
-        pass = false;
+        passDate = false;
       }
     }
     if (this.actualFilters.useFilterRate) {
 
-      pass = false;
+      passRate = false;
 
       if (this.actualFilters.starFilter_1) {
         if (trip.rate >= 1 && trip.rate < 2) {
-          pass = true
+          passRate = true
         }
       }
       if (this.actualFilters.starFilter_2) {
         if (trip.rate >= 2 && trip.rate < 3) {
-          pass = true
+          passRate = true
         }
       }
       if (this.actualFilters.starFilter_3) {
         if (trip.rate >= 3 && trip.rate < 4) {
-          pass = true
+          passRate = true
         }
       }
       if (this.actualFilters.starFilter_4) {
         if (trip.rate >= 4 && trip.rate < 5) {
-          pass = true
+          passRate = true
         }
       }
       if (this.actualFilters.starFilter_5) {
         if (trip.rate == 5) {
-          pass = true
+          passRate = true
         }
       }
-
+    }
+    if (passPrice == false || passDate == false || passRate == false) {
+      pass = false;
     }
     return pass;
   }
