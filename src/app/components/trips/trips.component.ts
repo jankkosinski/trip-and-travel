@@ -180,11 +180,6 @@ export class TripsComponent implements OnInit {
     }
     return pass;
   }
-
-  isLater(str1, str2) {
-      return new Date(str1) > new Date(str2);
-  }
-
 }
 
 export interface BorderTrips {

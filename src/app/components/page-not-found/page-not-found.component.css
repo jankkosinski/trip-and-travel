@@ -1,0 +1,9 @@
+.container {
+    margin-top: 25px;
+    padding: 50px;
+}
+
+.center-box {
+    margin-left: auto;
+    margin-right: auto;
+}
