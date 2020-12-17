@@ -143,7 +143,35 @@ export class TripsComponent implements OnInit {
       }
     }
     if (this.actualFilters.useFilterRate) {
-      
+
+      pass = false;
+
+      if (this.actualFilters.starFilter_1) {
+        if (trip.rate >= 1 && trip.rate < 2) {
+          pass = true
+        }
+      }
+      if (this.actualFilters.starFilter_2) {
+        if (trip.rate >= 2 && trip.rate < 3) {
+          pass = true
+        }
+      }
+      if (this.actualFilters.starFilter_3) {
+        if (trip.rate >= 3 && trip.rate < 4) {
+          pass = true
+        }
+      }
+      if (this.actualFilters.starFilter_4) {
+        if (trip.rate >= 4 && trip.rate < 5) {
+          pass = true
+        }
+      }
+      if (this.actualFilters.starFilter_5) {
+        if (trip.rate == 5) {
+          pass = true
+        }
+      }
+
     }
     return pass;
   }
