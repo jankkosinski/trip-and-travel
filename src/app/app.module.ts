@@ -25,6 +25,7 @@ import { NewTripComponent } from './components/new-trip/new-trip.component';
 import { FilterComponent } from './components/filter/filter.component';
 import { StartPanelComponent } from './components/start-panel/start-panel.component';
 import { TripPageComponent } from './components/trip-page/trip-page.component';
+import { AppRoutingModule } from './app-routing.module';
 
 
 
@@ -57,7 +58,8 @@ import { TripPageComponent } from './components/trip-page/trip-page.component';
     MatCheckboxModule,
     MatSliderModule,
     MatTabsModule,
-    MatCardModule
+    MatCardModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
