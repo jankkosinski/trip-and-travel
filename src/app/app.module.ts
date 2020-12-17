@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
@@ -9,6 +9,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatInputModule} from '@angular/material/input';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatSliderModule} from '@angular/material/slider';
 
 import { AppComponent } from './app.component';
 import { TripsComponent } from './components/trips/trips.component';
@@ -18,6 +20,8 @@ import { TripDetailsComponent } from './components/trip-details/trip-details.com
 import { StarRatesComponent } from './components/star-rates/star-rates.component';
 import { CartComponent } from './components/cart/cart.component';
 import { NewTripComponent } from './components/new-trip/new-trip.component';
+import { FilterComponent } from './components/filter/filter.component';
+
 
 
 @NgModule({
@@ -28,11 +32,13 @@ import { NewTripComponent } from './components/new-trip/new-trip.component';
     TripDetailsComponent,
     StarRatesComponent,
     CartComponent,
-    NewTripComponent
+    NewTripComponent,
+    FilterComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,
@@ -41,7 +47,9 @@ import { NewTripComponent } from './components/new-trip/new-trip.component';
     MatSidenavModule,
     MatSnackBarModule,
     MatInputModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatCheckboxModule,
+    MatSliderModule
   ],
   providers: [],
   bootstrap: [AppComponent]

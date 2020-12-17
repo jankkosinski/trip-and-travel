@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TripStructure } from '../../models/trips_structure';
 import { TripsDataService } from '../../services/trips-data.service';
 import { TripsReservationService } from "../../services/trips-reservation.service"
+import { FilterStructure } from "../../models/filter_structure"
 
 @Component({
   selector: 'app-trips',
@@ -14,6 +15,21 @@ export class TripsComponent implements OnInit {
   reservationsCount: number = 0;
   tripsDataList: TripStructure[] = <TripStructure[]>[];
   borderPrices: BorderTrips = <BorderTrips>{};
+  filterToggle: boolean = false;
+  actualFilters: FilterStructure = {
+    useFilerPrice: false,
+    minFilterPrice: null,
+    maxFilterPrice: null,
+    useFilterDate: false,
+    startFilterDate: "",
+    endFilterDate: "",
+    useFilterRate: false,
+    starFilter_1: null,
+    starFilter_2: null,
+    starFilter_3: null,
+    starFilter_4: null,
+    starFilter_5: null
+  };
 
   constructor(private tripDataService: TripsDataService, private tripsReservationServise: TripsReservationService) {
     this.tripDataService.getProducts().subscribe(
@@ -106,6 +122,36 @@ export class TripsComponent implements OnInit {
     this.tripDataService.updateProduct(trip, "rate", newValueRate);
     this.tripDataService.updateProduct(trip, "rated_count", tripValueRatedCount);
   }
+
+  updateFilters(newFilters: FilterStructure): void {
+    this.actualFilters = newFilters;
+  }
+
+  checkFilters(trip: TripStructure): boolean {
+    let pass = true;
+    if (this.actualFilters.useFilerPrice) {
+      if (trip.price < this.actualFilters.minFilterPrice || trip.price > this.actualFilters.maxFilterPrice) {
+        pass = false;
+      }
+    }
+    if (this.actualFilters.useFilterDate) {
+      if (new Date(trip.start_date.toString()) < new Date(this.actualFilters.startFilterDate.toString())) {
+        pass = false;
+      }
+      if (new Date(trip.end_date.toString()) > new Date(this.actualFilters.endFilterDate.toString())) {
+        pass = false;
+      }
+    }
+    if (this.actualFilters.useFilterRate) {
+      
+    }
+    return pass;
+  }
+
+  isLater(str1, str2) {
+      return new Date(str1) > new Date(str2);
+  }
+
 }
 
 export interface BorderTrips {

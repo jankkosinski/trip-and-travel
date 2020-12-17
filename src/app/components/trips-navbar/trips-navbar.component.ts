@@ -10,6 +10,7 @@ export class TripsNavbarComponent implements OnInit {
 
   @Input() reservationsCount: number;
   @Output() openCartSidebar = new EventEmitter;
+  @Output() openFilterSidebar = new EventEmitter;
 
   constructor(private _snackBar: MatSnackBar) { }
 
@@ -18,6 +19,10 @@ export class TripsNavbarComponent implements OnInit {
 
   openCart(): void {
     this.openCartSidebar.emit();
+  }
+
+  openFilter(): void {
+    this.openFilterSidebar.emit();
   }
 
   openSnackBar(message: string, action: string) {

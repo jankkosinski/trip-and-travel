@@ -2,6 +2,13 @@
   <mat-toolbar-row>
     <span>Trip&Travel</span>
     <span class="spacer"></span>
+
+    <button 
+        class="btn-floating waves-effect waves-light mr5" 
+        (click)="openFilter()">
+        <i class="material-icons">menu</i>
+    </button>
+
     <button 
       *ngIf="reservationsCount > 0"
       mat-raised-button 

@@ -1,0 +1,107 @@
+<div class="cart-view p5">
+
+    <section class="filter-section z-depth-1 card">
+        <div>
+            <mat-checkbox class="m5" [(ngModel)]="useFilerPrice">Price</mat-checkbox>
+        </div>
+        
+        <div>
+            <h6>From:</h6> <span style="font-weight: bold;"> {{minFilterPrice | currency}} </span> <br>
+            <mat-slider
+            thumbLabel
+            tickInterval="1000"
+            [min]="minPrice"
+            [max]="maxPrice"
+            [(ngModel)]="minFilterPrice">
+            </mat-slider>
+            <br>
+
+        </div>
+        
+        <div>
+            <h6>To:</h6> <span style="font-weight: bold;"> {{maxFilterPrice | currency}} </span> <br>
+            <mat-slider
+                thumbLabel
+                tickInterval="1000"
+                [min]="minFilterPrice"
+                [max]="maxPrice"
+                [(ngModel)]="maxFilterPrice">    
+            </mat-slider>
+            <br>
+            
+        </div>
+        
+    </section>
+
+    <section class="filter-section z-depth-1 card">
+        <div>
+            <mat-checkbox class="m5" [(ngModel)]="useFilterDate">Date</mat-checkbox>
+        </div>
+        <div>
+            <h6>From:</h6> <br>
+            <mat-form-field>
+                <mat-label>Start Date</mat-label>
+                <input [(ngModel)]="startFilterDate" name="start_date" type="date" [max]="endFilterDate" matInput>
+            </mat-form-field>
+        </div>
+        <div>
+            <h6>To:</h6> <br>
+            <mat-form-field>
+                <mat-label>End Date</mat-label>
+                <input [(ngModel)]="endFilterDate" name="start_date" type="date" [min]="startFilterDate" matInput>
+            </mat-form-field>
+        </div>
+    </section>
+
+    <section class="filter-section z-depth-1 card">
+        <div>
+            <mat-checkbox class="m5" [(ngModel)]="useFilterRate">Rate</mat-checkbox>
+        </div>
+        <div class="rates-card m5">
+            <div>
+                <mat-checkbox class="m5" [(ngModel)]="starFilter_1">
+                    <i class="m5 material-icons" style="color: gold;">star</i>
+                </mat-checkbox>
+            </div>
+            <div>
+                <mat-checkbox class="m5" [(ngModel)]="starFilter_2">
+                    <i class="m5 material-icons" style="color: gold;">star</i>
+                    <i class="m5 material-icons" style="color: gold;">star</i>
+                </mat-checkbox>
+            </div>
+            <div>
+                <mat-checkbox class="m5" [(ngModel)]="starFilter_3">
+                    <i class="m5 material-icons" style="color: gold;">star</i>
+                    <i class="m5 material-icons" style="color: gold;">star</i>
+                    <i class="m5 material-icons" style="color: gold;">star</i>
+                </mat-checkbox>
+            </div>
+            <div>
+                <mat-checkbox class="m5" [(ngModel)]="starFilter_4">
+                    <i class="m5 material-icons" style="color: gold;">star</i>
+                    <i class="m5 material-icons" style="color: gold;">star</i>
+                    <i class="m5 material-icons" style="color: gold;">star</i>
+                    <i class="m5 material-icons" style="color: gold;">star</i>
+                </mat-checkbox>
+            </div>
+            <div>
+                <mat-checkbox class="m5" [(ngModel)]="starFilter_5">
+                    <i class="m5 material-icons" style="color: gold;">star</i>
+                    <i class="m5 material-icons" style="color: gold;">star</i>
+                    <i class="m5 material-icons" style="color: gold;">star</i>
+                    <i class="m5 material-icons" style="color: gold;">star</i>
+                    <i class="m5 material-icons" style="color: gold;">star</i>
+                </mat-checkbox>
+            </div>
+        </div>
+    </section>
+    
+    <div class="m5">
+        <button class="btn waves-effect waves-light m5" (click)="useFilters()">
+            Filter
+        </button>
+        <button class="btn red waves-effect waves-light m5" (click)="close()">
+            Close
+        </button>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+.m5 {
+    margin: 5px;
+}
+.p5 {
+    padding: 5px;
+}
+
+.cart-view {
+    margin: 1px;
+    width: 300px;
+}
+
+.filter-section {
+    margin: 5px;
+    padding: 5px;
+}
+
+.rates-card {
+    padding-left: 10px;
+}
+
+@media (max-width: 992px) {
+    .cart-view {
+        width: 100vw;
+    }
+}

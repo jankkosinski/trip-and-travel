@@ -8,3 +8,11 @@
     background-color: lightsteelblue;
     padding: 20px;
 }
+
+.m-5 {
+    margin: 5px;
+}
+
+.container {
+    min-height: 900px;
+}

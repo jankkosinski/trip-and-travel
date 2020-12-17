@@ -1,29 +1,42 @@
 <app-trips-navbar 
     [reservationsCount]="reservationsCount"
-    (openCartSidebar)="drawer.open()">
+    (openCartSidebar)="drawer.open()"
+    (openFilterSidebar)="filter.toggle()">
 </app-trips-navbar>
 
 <mat-drawer-container autosize>
+
+    <mat-drawer #filter mode="side" position="start" (opened)="filterToggle=true" (closed)="filterToggle=false">
+        <app-filter
+            [minPrice]="borderPrices.low.value - 100 > 0 ? borderPrices.low.value - 100 : 0"
+            [maxPrice]="borderPrices.high.value + 100"
+            (filterEvent)="updateFilters($event)"
+            (closeFilters)="filter.close()">
+        </app-filter>
+    </mat-drawer>
+
     <mat-drawer #drawer mode="side" position="end">
         <app-cart
         *ngIf="reservationsCount!=0"
         (closeCart)="drawer.close()">
         </app-cart>
     </mat-drawer>
-
+    
     <app-new-trip></app-new-trip>
 
     <div class="container">
-        <div class="row z-depth-3 bg-light" 
-            *ngFor="let item of tripsDataList.reverse()" 
-            [style] = "borderPrices.high.trips.includes(item) ? 'border: 4px solid green' : '' || borderPrices.low.trips.includes(item) ? 'border: 4px solid red' : ''" >
-            <app-trip-details 
-                [trip]="item" 
-                (onAddReservation)="addTripReservation($event)" 
-                (onRemoveReservation)="removeTripReservation($event)" 
-                (onRemoveTrip)="removeTrip($event)"
-                (onRateTrip)="rateTrip(item,$event)">
-            </app-trip-details>
+        <div *ngFor="let item of tripsDataList.reverse()" >
+            <div class="row z-depth-3 bg-light" 
+                *ngIf="checkFilters(item)"
+                [style] = "borderPrices.high.trips.includes(item) ? 'border: 4px solid green' : '' || borderPrices.low.trips.includes(item) ? 'border: 4px solid red' : ''">
+                <app-trip-details 
+                    [trip]="item" 
+                    (onAddReservation)="addTripReservation($event)" 
+                    (onRemoveReservation)="removeTripReservation($event)" 
+                    (onRemoveTrip)="removeTrip($event)"
+                    (onRateTrip)="rateTrip(item,$event)">
+                </app-trip-details>
+            </div>
         </div>
     </div>
   
