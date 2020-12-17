@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 import { TripStructure } from "../../models/trips_structure"
-import {TripsDataService} from "../../services/trips-data.service"
+import { TripsDataService } from "../../services/trips-data.service"
 
 @Component({
   selector: 'app-trip-page',
