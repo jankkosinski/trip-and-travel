@@ -18,9 +18,9 @@ export class TripsDataService {
     return this.tripsDataList.asObservable();
    }
 
-   getProduct(trip: TripStructure) {
-    let index = this.tripsDataList.getValue().indexOf(trip);
-    return this.tripsDataList[index].asObservable();
+   getProduct(id: number) {
+    let trip = this.tripsDataList.getValue().find(obj => obj.id === id);
+    return trip;
    }
 
    addProduct(trip: TripStructure) {

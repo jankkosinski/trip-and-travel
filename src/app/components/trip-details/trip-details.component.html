@@ -1,5 +1,7 @@
 <div class="col s12 m4" >
-    <img class="circle img-h-still responsive-img z-depth-3" src="{{trip.img}}" alt="">
+    <a [routerLink]="['/trip-page', trip.id]">
+        <img class="circle img-h-still responsive-img z-depth-3" src="{{trip.img}}" alt="">
+    </a>
 </div>
 <div class="col s12 m6">
     <div class="title">

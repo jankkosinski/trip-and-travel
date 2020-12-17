@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full'},
   { path: 'login', component: StartPanelComponent },
   { path: 'trips',  component: TripsComponent},
-  { path: 'trip-page', component: TripPageComponent},
+  { path: 'trip-page/:id', component: TripPageComponent},
   { path: '**', component: PageNotFoundComponent}
 ];
 

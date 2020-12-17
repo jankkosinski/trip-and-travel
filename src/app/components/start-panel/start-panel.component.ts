@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StartPanelComponent implements OnInit {
 
+  selectedTab: number = 0;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  registerUser(): void {
+    this.selectedTab = 0;
   }
 
 }
