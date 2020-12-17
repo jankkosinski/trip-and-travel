@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "tripandtravel-serverless": {
+      "hosting": {
+        "Trip-And-Travel": [
+          "tripandtravel-serverless"
+        ]
+      }
+    }
+  }
+}
