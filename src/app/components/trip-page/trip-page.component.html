@@ -1,1 +1,62 @@
-<p>trip-page works!</p>
+<mat-toolbar class="z-depth-3" color="primary">
+    <mat-toolbar-row>
+      <span>Trip&Travel</span>
+      <span class="spacer"></span>
+      <button 
+        mat-raised-button 
+        class="bg-basic">
+        Back
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div class="trip-box">
+    <div class="row card z-depth-3">
+        <div class="col s12">
+            <img class="responsive-img" [src]="trip.img">
+        </div>
+        <div class="col s12">
+            <h4>{{trip.name}}</h4>
+            <h5>{{trip.destination}}</h5>
+        </div>
+        <div class="col s12 m4 trip-box">
+            <div>
+                <h6>Price: {{trip.price | currency}}</h6>
+                <h6>Date: {{trip.start_date}} - {{trip.end_date}}</h6>
+            </div>
+        </div>
+        <div class="col s12 m4 trip-box">
+            <div>
+                <i *ngFor="let star of stars" 
+                class="star-rating-blank material-icons"
+                [ngClass]="{'star-rating-filled': trip.rate >= star, 'star-rating-blank': trip.rate < star}">
+                star
+            </i>
+        </div>
+        <div>
+            Rate: {{getTripRate()}} / 5 <br>
+            Voted: {{trip.rated_count}}
+        </div>
+    </div>
+        <div class="col s12 m4 trip-box">
+            <div>
+                Available seats: <br>
+                {{trip.availableSeats}} / {{trip.maxSeats}}
+            </div>
+        </div>
+        <div class="col s12">
+
+        </div>
+        <div class="col s12 m8 trip-box">
+            <div class="mt-10">
+                {{trip.description}}
+            </div>
+        </div>
+        <div class="col s12 m4">
+            COMMENTS to expand
+        </div>
+        <div class="col s12 m8">
+            GALLERY
+        </div>
+    </div>
+  </div>

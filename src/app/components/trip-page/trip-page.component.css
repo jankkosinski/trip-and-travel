@@ -1,0 +1,29 @@
+.spacer {
+    flex: 1 1 auto;
+  }
+
+  .bg-basic {
+    background-color: #26a69a;
+    color: whitesmoke;
+    border: 1px solid #26a69a;
+  }
+
+  .trip-box {
+      padding: 10px;
+  }
+
+  .card {
+      padding: 20px;
+  }
+
+  .star-rating-filled {
+    color: gold;
+  }
+  
+  .star-rating-blank {
+    color: #696262;
+  }
+
+  .mt-10 {
+    margin-top: 10px;
+  }
