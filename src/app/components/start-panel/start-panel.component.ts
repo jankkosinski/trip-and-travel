@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-start-panel',
@@ -9,9 +10,13 @@ export class StartPanelComponent implements OnInit {
 
   selectedTab: number = 0;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  loginUser(): void {
+    this.router.navigate(['/trips']);
   }
 
   registerUser(): void {

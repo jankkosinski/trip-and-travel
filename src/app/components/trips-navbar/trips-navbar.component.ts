@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-trips-navbar',
@@ -12,7 +13,7 @@ export class TripsNavbarComponent implements OnInit {
   @Output() openCartSidebar = new EventEmitter;
   @Output() openFilterSidebar = new EventEmitter;
 
-  constructor(private _snackBar: MatSnackBar) { }
+  constructor(private _snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -29,6 +30,10 @@ export class TripsNavbarComponent implements OnInit {
     this._snackBar.open(message, action, {
       duration: 3000,
     });
+  }
+
+  logOutUser(): void {
+    this.router.navigate(['/login']);
   }
 
 }
