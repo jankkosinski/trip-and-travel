@@ -4,16 +4,11 @@
     <span class="spacer"></span>
 
     <button 
-        class="btn waves-effect waves-light mr5" 
-        (click)="openFilter()">
-        <i class="material-icons">menu</i>
-    </button>
-
-    <button 
       *ngIf="reservationsCount > 0"
       mat-raised-button 
       [ngClass]="{'bg-basic-anim': reservationsCount < 10, 'bg-special-anim': reservationsCount >= 10}"
       [matBadge]="reservationsCount" 
+      matBadgePosition="before"
       matBadgeColor="warn"
       (click) = "openCart()">
       Cart  <mat-icon>shopping_cart</mat-icon>
@@ -25,6 +20,19 @@
       class="bg-basic"
       (click)="openSnackBar('Your cart is empty.', 'Close')">
       Cart  <mat-icon>shopping_cart</mat-icon>
+    </button>
+
+    <button 
+        mat-raised-button 
+        class="bg-basic ml5"
+        (click)="openFilter()">
+        <mat-icon>menu</mat-icon>
+    </button>
+
+    <button 
+      mat-raised-button 
+      class="bg-basic ml5">
+      <mat-icon>login</mat-icon>
     </button>
 
   </mat-toolbar-row>

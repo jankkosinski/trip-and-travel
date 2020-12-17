@@ -28,6 +28,10 @@
   margin-right: 5px;
 }
 
+.ml5 {
+  margin-left: 5px;
+}
+
 @keyframes special-on {
   0%   {background-color:  #26a69a; border: 1px solid #26a69a;}
   25%  {background-color:    #17796f; border: 1px solid   #17796f;}

@@ -11,6 +11,8 @@ import {MatInputModule} from '@angular/material/input';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSliderModule} from '@angular/material/slider';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatCardModule} from '@angular/material/card';
 
 import { AppComponent } from './app.component';
 import { TripsComponent } from './components/trips/trips.component';
@@ -53,7 +55,9 @@ import { TripPageComponent } from './components/trip-page/trip-page.component';
     MatInputModule,
     MatExpansionModule,
     MatCheckboxModule,
-    MatSliderModule
+    MatSliderModule,
+    MatTabsModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
