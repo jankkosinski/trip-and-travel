@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { AuthService } from "../../services/auth.service"
 
 @Component({
   selector: 'app-trips-navbar',
@@ -13,7 +14,7 @@ export class TripsNavbarComponent implements OnInit {
   @Output() openCartSidebar = new EventEmitter;
   @Output() openFilterSidebar = new EventEmitter;
 
-  constructor(private _snackBar: MatSnackBar, private router: Router) { }
+  constructor(private _snackBar: MatSnackBar, private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
   }
@@ -33,6 +34,7 @@ export class TripsNavbarComponent implements OnInit {
   }
 
   logOutUser(): void {
+    this.authService.logout();
     this.router.navigate(['/login']);
   }
 
