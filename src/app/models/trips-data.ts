@@ -2,7 +2,7 @@ import { TripStructure } from '../models/trips_structure';
 
 export const EXAMPLE_TRIPS: TripStructure[] = [
     {
-        id: 1,
+        id: "1",
         name: 'Weekend in Warsaw',
         destination: 'Warsaw',
         start_date: '2021-01-21',
@@ -16,7 +16,7 @@ export const EXAMPLE_TRIPS: TripStructure[] = [
         rated_count: 4
     },
     {
-        id: 2,
+        id: "2",
         name: 'Torun\'s Pastries', 
         destination: 'Torun', 
         start_date: '2021-01-21',
@@ -30,7 +30,7 @@ export const EXAMPLE_TRIPS: TripStructure[] = [
         rated_count: 2
     },
     {
-        id: 3,
+        id: "3",
         name: 'Zakopane for sports', 
         destination: 'Zakopane', 
         start_date: '2021-01-21',
@@ -44,7 +44,7 @@ export const EXAMPLE_TRIPS: TripStructure[] = [
         rated_count: 0
     },
     {
-        id: 4,
+        id: "4",
         name: 'Truth about Kazimierz', 
         destination: 'Kazimierz The Great', 
         start_date: '2021-01-21',
@@ -58,7 +58,7 @@ export const EXAMPLE_TRIPS: TripStructure[] = [
         rated_count: 1
     },
     {
-        id: 5,
+        id: "5",
         name: 'History of Cracow', 
         destination: 'Cracow', 
         start_date: '2021-01-21',
@@ -72,7 +72,7 @@ export const EXAMPLE_TRIPS: TripStructure[] = [
         rated_count: 0
     },
     {
-        id: 6,
+        id: "6",
         name: 'Sunny Baltic Sea', 
         destination: 'Kolobrzeg', 
         start_date: '2021-01-21',
@@ -86,7 +86,7 @@ export const EXAMPLE_TRIPS: TripStructure[] = [
         rated_count: 0
     },
     {
-        id: 7,
+        id: "7",
         name: 'Masuria on sails', 
         destination: 'Elk', 
         start_date: '2021-01-21',

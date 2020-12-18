@@ -1,45 +1,35 @@
 import { Injectable } from '@angular/core';
 import { TripStructure } from '../models/trips_structure';
-import { EXAMPLE_TRIPS } from '../models/trips-data';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TripsDataService {
 
-  private tripsDataList =  new BehaviorSubject<TripStructure[]>([]);
+  private tripDataCollection: AngularFirestoreCollection<TripStructure>;
+  tripsDataList: Observable<TripStructure[]>;
   
-  constructor() {
-    this.tripsDataList.next(EXAMPLE_TRIPS);
-   }
-
-   getProducts(): Observable<TripStructure[]> {
-    return this.tripsDataList.asObservable();
-   }
-
-   getProduct(id: number) {
-    let trip = this.tripsDataList.getValue().find(obj => obj.id === id);
-    return trip;
+  constructor(private db: AngularFirestore) {
+    this.tripDataCollection = this.db.collection<TripStructure>('/trips');
+    this.tripsDataList = this.tripDataCollection.valueChanges({ idField: 'id'});
    }
 
    addProduct(trip: TripStructure) {
-     let actualTripsData = this.tripsDataList.getValue();
-     actualTripsData.push(trip);
-     this.tripsDataList.next(actualTripsData);
+     delete trip.id;
+     this.tripDataCollection.add(trip);
    }
 
    deleteProduct(trip: TripStructure) {
-    let actualTripsData = this.tripsDataList.getValue();
-    actualTripsData = actualTripsData.filter(obj => obj !== trip);
-    this.tripsDataList.next(actualTripsData);
+    const id: string = trip.id;
+    this.tripDataCollection.doc(id).delete();
    }
 
-   updateProduct(trip: TripStructure, key: string, newValue) {
-    let actualTripsData = this.tripsDataList.getValue();
-    let index = actualTripsData.indexOf(trip);
-    actualTripsData[index][key] = newValue;
-    this.tripsDataList.next(actualTripsData);
+   updateProduct(trip: TripStructure) {
+    const id: string = trip.id;
+    delete trip.id;
+    this.tripDataCollection.doc(id).update(trip);
    }
 
 }

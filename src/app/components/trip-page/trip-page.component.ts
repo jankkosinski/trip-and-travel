@@ -10,15 +10,32 @@ import { TripsDataService } from "../../services/trips-data.service"
 })
 export class TripPageComponent implements OnInit {
 
-  trip: TripStructure;
+  trip: TripStructure = {
+    id: "",
+    name: "",
+    destination: "",
+    start_date: "",
+    end_date: "",
+    price: null,
+    availableSeats: null,
+    maxSeats: null,
+    description: "",
+    img: "",
+    rate: null,
+    rated_count: null
+  };
 
   stars: number[] = [1, 2, 3, 4, 5];
 
-  constructor(private route: ActivatedRoute, private tripDataService: TripsDataService) { }
+  constructor(private route: ActivatedRoute, private tripDataService: TripsDataService) { 
+    tripDataService.tripsDataList.subscribe(
+      tripData => {
+        this.trip = tripData.find(obj => obj.id === this.route.snapshot.paramMap.get('id'));
+      }
+    )
+  }
 
   ngOnInit(): void {
-    let id: string = this.route.snapshot.paramMap.get('id')
-    this.trip = this.tripDataService.getProduct(+id);
   }
 
   getTripRate(): string {

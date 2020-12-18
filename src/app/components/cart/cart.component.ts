@@ -13,16 +13,23 @@ export class CartComponent implements OnInit {
 
   @Output() closeCart = new EventEmitter();
 
-  reservationsData: Reservation[] = <Reservation[]>[];
+  tripsDataList$: TripStructure[] = [];
+  reservationList$: Reservation[] = [];
   cartValue: number = 0;
 
   constructor(private tripsReservationServise: TripsReservationService, private tripDataService: TripsDataService) { 
-    this.tripsReservationServise.getReservations().subscribe(
+    tripDataService.tripsDataList.subscribe(
+      tripStream => {
+        this.tripsDataList$ = tripStream;
+      }
+    );
+    this.tripsReservationServise.reservationDataList.subscribe(
       reservationStream => {
-        this.reservationsData = reservationStream;
+        this.reservationList$ = reservationStream
         let newCartValue = 0;
         for (let i = 0; i < reservationStream.length; i++) {
-          newCartValue = newCartValue + (reservationStream[i].trip.price * reservationStream[i].reservations_count);
+          let trip = this.tripsDataList$.find(obj => obj.id === reservationStream[i].trip_id);
+          newCartValue = newCartValue + (trip.price * reservationStream[i].reservations_count)
         }
         this.cartValue = newCartValue;
       }
@@ -32,9 +39,16 @@ export class CartComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  removeReservation(trip: TripStructure): void {
-    this.tripsReservationServise.deleteTripReservation(trip);
-    this.tripDataService.updateProduct(trip, "availableSeats", trip.maxSeats);
+  getTrip(trip_id: string): TripStructure {
+    return this.tripsDataList$.find(obj => obj.id === trip_id)
+  }
+
+  removeReservation(trip_id: string): void {
+    let reservation = this.reservationList$.find(obj => obj.trip_id === trip_id);
+    this.tripsReservationServise.deleteTripReservation(reservation);
+    let trip = this.tripsDataList$.find(obj => obj.id === trip_id);
+    trip.availableSeats = trip.maxSeats;
+    this.tripDataService.updateProduct(trip);
   }
 
   close(): void {

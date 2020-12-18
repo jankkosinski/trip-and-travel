@@ -13,18 +13,18 @@ export class NewTripComponent implements OnInit {
 
   @ViewChild('uploadFile') myInputFileVariable: ElementRef;
 
-  name: String = "";
-  destination: String = "";
-  start_date: String = "";
-  end_date: String = "";
+  name: string = "";
+  destination: string = "";
+  start_date: string = "";
+  end_date: string = "";
   price: number = null;
   availableSeats: number = null;
   maxSeats: number = null;
-  description: String = "";
+  description: string = "";
   img: string = "";
 
   panelOpenState: boolean = false;
-  fileStatus: String = "";
+  fileStatus: string = "";
 
   constructor(private tripDataService: TripsDataService, private _snackBar: MatSnackBar) { }
 
@@ -50,7 +50,7 @@ export class NewTripComponent implements OnInit {
       });
     } else {
       let trip: TripStructure = {
-        id: 0,
+        id: "newTrip",
         name: this.name,
         destination: this.destination,
         start_date: this.start_date,

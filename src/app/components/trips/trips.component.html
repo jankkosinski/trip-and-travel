@@ -25,7 +25,8 @@
     <app-new-trip></app-new-trip>
 
     <div class="container">
-        <div *ngFor="let item of tripsDataList.reverse()" >
+
+        <div *ngFor="let item of tripsDataList$.reverse()" >
             <div class="row z-depth-3 bg-light" 
                 *ngIf="checkFilters(item)"
                 [style] = "borderPrices.high.trips.includes(item) ? 'border: 4px solid green' : '' || borderPrices.low.trips.includes(item) ? 'border: 4px solid red' : ''">
@@ -38,6 +39,7 @@
                 </app-trip-details>
             </div>
         </div>
+
     </div>
   
 </mat-drawer-container>

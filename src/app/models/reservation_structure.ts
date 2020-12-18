@@ -1,6 +1,5 @@
-import {TripStructure} from "./trips_structure"
-
 export interface Reservation {
-    trip: TripStructure;
+    id: string,
+    trip_id: string;
     reservations_count: number;
 }

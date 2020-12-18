@@ -1,13 +1,13 @@
 <div class="cart-view m5 p5">
     <h5>Reservations</h5>
     <div class="z-depth-1 card m5 p5"
-        *ngFor="let item of reservationsData">
-        {{item.trip.name}} 
+        *ngFor="let item of reservationList$">
+        {{getTrip(item.trip_id)?.name}} 
         <span class="new badge">{{item.reservations_count}}</span>
         <div>
             <button 
                 class="btn-small red waves-effect waves-light mt2" 
-                (click)="removeReservation(item.trip)">
+                (click)="removeReservation(item.trip_id)">
                 <i class="material-icons small">delete_forever</i>
             </button>
         </div>
