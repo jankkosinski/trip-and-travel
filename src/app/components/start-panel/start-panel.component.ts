@@ -32,7 +32,6 @@ export class StartPanelComponent implements OnInit {
       this.router.navigate(['/trips']);
     })
     .catch((error) => {
-      console.log(error);
       this._snackBar.open(error.message, 'Close',{
         duration: 3000,
       });
