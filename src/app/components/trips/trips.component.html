@@ -8,8 +8,8 @@
 
     <mat-drawer #filter mode="side" position="start" (opened)="filterToggle=true" (closed)="filterToggle=false">
         <app-filter
-            [minPrice]="borderPrices.low.value - 100 > 0 ? borderPrices.low.value - 100 : 0"
-            [maxPrice]="borderPrices.high.value + 100"
+            [minPrice]="borderPrices.low.value"
+            [maxPrice]="borderPrices.high.value"
             (filterEvent)="updateFilters($event)"
             (closeFilters)="filter.close()">
         </app-filter>

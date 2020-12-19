@@ -8,8 +8,8 @@ import {FilterStructure} from "../../models/filter_structure"
 })
 export class FilterComponent implements OnInit {
 
-  @Input() minPrice = new EventEmitter();
-  @Input() maxPrice = new EventEmitter();
+  @Input() minPrice: number;
+  @Input() maxPrice: number;
   @Output() filterEvent = new EventEmitter();
   @Output() closeFilters = new EventEmitter();
 
@@ -18,8 +18,8 @@ export class FilterComponent implements OnInit {
   maxFilterPrice: number;
 
   useFilterDate: boolean = false;
-  startFilterDate: String;
-  endFilterDate: String;
+  startFilterDate: string;
+  endFilterDate: string;
 
   useFilterRate: boolean = false;
   starFilter_1: boolean;
@@ -49,6 +49,24 @@ export class FilterComponent implements OnInit {
       starFilter_5: this.starFilter_5
     }
     this.filterEvent.emit(filterData);
+  }
+
+  clear(): void {
+    this.useFilerPrice = false;
+    this.minFilterPrice = this.minPrice;
+    this.maxFilterPrice = this.maxPrice;
+
+    this.useFilterDate = false;
+    this.startFilterDate = "";
+    this.endFilterDate = "";
+
+    this.useFilterRate = false;
+    this.starFilter_1 = false;
+    this.starFilter_2 = false;
+    this.starFilter_3 = false;
+    this.starFilter_4 = false;
+    this.starFilter_5 = false;
+    this.useFilters();
   }
 
   close(): void {

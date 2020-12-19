@@ -22,23 +22,23 @@
 
             <mat-form-field class="half-width">
                 <mat-label>Start Date</mat-label>
-                <input [(ngModel)]="start_date" name="start_date" type="date" matInput>
+                <input [(ngModel)]="start_date" [max]="end_date" name="start_date" onkeypress="return false" type="date" matInput>
             </mat-form-field>
 
             <mat-form-field class="half-width">
                 <mat-label>End Date</mat-label>
-                <input [(ngModel)]="end_date" name="end_date" type="date" matInput>
+                <input [(ngModel)]="end_date" [min]="start_date" name="end_date" onkeypress="return false" type="date" matInput>
             </mat-form-field>
 
             <mat-form-field class="half-width">
                 <mat-label>Price</mat-label>
-                <input [(ngModel)]="price" name="price" type="text" matInput>
+                <input [(ngModel)]="price" name="price" type="number" (change)="checkValue()" matInput>
                 <span matPrefix>$&nbsp;</span>
             </mat-form-field>
 
             <mat-form-field class="half-width">
                 <mat-label>Seats</mat-label>
-                <input [(ngModel)]="maxSeats" [(ngModel)]="availableSeats" name="max_seats" type="number" matInput>
+                <input [(ngModel)]="seats" name="max_seats" type="number" (change)="checkValue()" matInput>
             </mat-form-field>
 
             <mat-form-field class="full-width">

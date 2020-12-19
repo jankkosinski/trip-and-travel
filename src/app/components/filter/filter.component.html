@@ -11,7 +11,8 @@
             thumbLabel
             tickInterval="1000"
             [min]="minPrice"
-            [max]="maxPrice"
+            [max]="maxFilterPrice > maxPrice ? maxFilterPrice : maxPrice"
+            [value]="minPrice"
             [(ngModel)]="minFilterPrice">
             </mat-slider>
             <br>
@@ -23,8 +24,9 @@
             <mat-slider
                 thumbLabel
                 tickInterval="1000"
-                [min]="minFilterPrice"
+                [min]="minFilterPrice < minPrice ? minFilterPrice : minPrice"
                 [max]="maxPrice"
+                [value]="maxPrice"
                 [(ngModel)]="maxFilterPrice">    
             </mat-slider>
             <br>
@@ -41,14 +43,14 @@
             <h6>From:</h6> <br>
             <mat-form-field>
                 <mat-label>Start Date</mat-label>
-                <input [(ngModel)]="startFilterDate" name="start_date" type="date" [max]="endFilterDate" matInput>
+                <input [(ngModel)]="startFilterDate" name="start_date" onkeypress="return false" type="date" [max]="endFilterDate" matInput>
             </mat-form-field>
         </div>
         <div>
             <h6>To:</h6> <br>
             <mat-form-field>
                 <mat-label>End Date</mat-label>
-                <input [(ngModel)]="endFilterDate" name="start_date" type="date" [min]="startFilterDate" matInput>
+                <input [(ngModel)]="endFilterDate" name="end_date" onkeypress="return false" type="date" [min]="startFilterDate" matInput>
             </mat-form-field>
         </div>
     </section>
@@ -99,6 +101,9 @@
     <div class="m5">
         <button class="btn waves-effect waves-light m5" (click)="useFilters()">
             Filter
+        </button>
+        <button class="btn waves-effect waves-light m5" (click)="clear()">
+            Clear
         </button>
         <button class="btn red waves-effect waves-light m5" (click)="close()">
             Close

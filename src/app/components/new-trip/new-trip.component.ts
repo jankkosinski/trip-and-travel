@@ -13,13 +13,14 @@ export class NewTripComponent implements OnInit {
 
   @ViewChild('uploadFile') myInputFileVariable: ElementRef;
 
+  private maxImgBytes: number = 1048487;
+
   name: string = "";
   destination: string = "";
   start_date: string = "";
   end_date: string = "";
   price: number = null;
-  availableSeats: number = null;
-  maxSeats: number = null;
+  seats: number = null;
   description: string = "";
   img: string = "";
 
@@ -37,8 +38,16 @@ export class NewTripComponent implements OnInit {
       const [file] = event.target.files;
       reader.readAsDataURL(file);
       reader.onload = () => {
-        this.img = reader.result as string;
-        this.fileStatus = "File uploaded successfully!"
+        let imgValue = reader.result as string;
+        this.myInputFileVariable.nativeElement.value = "";
+        const byteSize = new Blob([imgValue]).size;
+        if (byteSize > this.maxImgBytes) {
+          this.img = null;
+          this.fileStatus = "File upload has failed! The file can't be larger than 1MB."
+        } else {
+          this.img = imgValue; 
+          this.fileStatus = "File transfer was successful!"
+        }
       };
     }
   }
@@ -56,8 +65,8 @@ export class NewTripComponent implements OnInit {
         start_date: this.start_date,
         end_date: this.end_date,
         price: this.price,
-        availableSeats: this.availableSeats,
-        maxSeats: this.maxSeats,
+        availableSeats: this.seats,
+        maxSeats: this.seats,
         description: this.description,
         img: this.img,
         rate: 0,
@@ -77,12 +86,20 @@ export class NewTripComponent implements OnInit {
     if (this.start_date == "") available = false;
     if (this.end_date == "") available = false;
     if (this.price == null) available = false;
-    if (this.availableSeats == null) available = false;
-    if (this.maxSeats == null) available = false;
+    if (this.seats == null) available = false;
     if (this.description == "") available = false;
     if (this.img == "") available = false;
 
     return available;
+  }
+
+  checkValue() {
+    if (this.price < 0) {
+      this.price = 0;
+    }
+    if (this.seats < 0) {
+      this.seats = 0;
+    }
   }
 
   clearData(): void {
@@ -91,8 +108,7 @@ export class NewTripComponent implements OnInit {
     this.start_date = "";
     this.end_date = "";
     this.price = null;
-    this.availableSeats = null;
-    this.maxSeats = null;
+    this.seats = null;
     this.description = "";
     this.img = "";
     this.myInputFileVariable.nativeElement.value = "";

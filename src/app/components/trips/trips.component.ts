@@ -126,7 +126,9 @@ export class TripsComponent implements OnInit {
 
   removeTrip(trip: TripStructure): void {
     let reservation = this.reservationList.find(obj => obj.trip_id === trip.id)
-    this.tripsReservationServise.deleteTripReservation(reservation);
+    if (reservation != null) {
+      this.tripsReservationServise.deleteTripReservation(reservation);
+    }
     this.tripDataService.deleteProduct(trip);
   }
 
