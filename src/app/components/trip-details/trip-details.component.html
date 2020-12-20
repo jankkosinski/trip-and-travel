@@ -25,7 +25,10 @@
     </button>
 </div>
 <div class="col s12 m2">
-    <button (click)="removeTrip()" class="btn red waves-effect waves-light btn-margin mb-5">
+    <button
+        *ngIf="userRole === 'admin'" 
+        (click)="removeTrip()" 
+        class="btn red waves-effect waves-light btn-margin mb-5">
         {{"remove trip" | uppercase}}
     </button>
 </div>

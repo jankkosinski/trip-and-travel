@@ -18,11 +18,14 @@
     <mat-drawer #drawer mode="side" position="end">
         <app-cart
         *ngIf="reservationsCount!=0"
+        [userID]="actualUserID"
         (closeCart)="drawer.close()">
         </app-cart>
     </mat-drawer>
     
-    <app-new-trip></app-new-trip>
+    <app-new-trip
+        *ngIf="actualUserRole.role === 'admin'">
+    </app-new-trip>
 
     <div class="container">
 
@@ -32,6 +35,7 @@
                 [style] = "borderPrices.high.trips.includes(item) ? 'border: 4px solid green' : '' || borderPrices.low.trips.includes(item) ? 'border: 4px solid red' : ''">
                 <app-trip-details 
                     [trip]="item" 
+                    [userRole]="actualUserRole.role"
                     (onAddReservation)="addTripReservation($event)" 
                     (onRemoveReservation)="removeTripReservation($event)" 
                     (onRemoveTrip)="removeTrip($event)"

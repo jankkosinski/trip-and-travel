@@ -2,8 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { TripStructure } from '../../models/trips_structure';
 import { TripsDataService } from '../../services/trips-data.service';
 import { TripsReservationService } from "../../services/trips-reservation.service"
-import { FilterStructure } from "../../models/filter_structure"
-import { Reservation } from 'src/app/models/reservation_structure';
+import { FilterStructure } from "../../models/filter_structure";
+import { Basket, Reservation } from 'src/app/models/reservation_structure';
+import { UserRolesService } from "../../services/user-roles.service";
+import { AuthService } from "../../services/auth.service";
+import { UserRole } from "../../models/user_structures";
+import { BasketService } from "../../services/basket.service";
 
 @Component({
   selector: 'app-trips',
@@ -13,9 +17,14 @@ import { Reservation } from 'src/app/models/reservation_structure';
 
 export class TripsComponent implements OnInit {
 
+  actualUserRole: UserRole = <UserRole>{};
+  actualUserID: string = "";
   reservationsCount: number = 0;
+
   tripsDataList$: TripStructure[] = [];
-  reservationList: Reservation[] = [];
+  reservationList$: Reservation[] = [];
+  basketsList$: Basket[] = [];
+  
   borderPrices: BorderTrips = {
     low: {
       value: 0,
@@ -42,7 +51,13 @@ export class TripsComponent implements OnInit {
     starFilter_5: null
   };
 
-  constructor(private tripDataService: TripsDataService, private tripsReservationServise: TripsReservationService) {
+  constructor(
+    private tripDataService: TripsDataService, 
+    private tripsReservationServise: TripsReservationService,
+    private userRolesService: UserRolesService,
+    private authService: AuthService,
+    private basketService: BasketService
+    ) {
      tripDataService.tripsDataList.subscribe(
       tripStream => {
         this.tripsDataList$ = tripStream;
@@ -51,17 +66,26 @@ export class TripsComponent implements OnInit {
     );
     this.tripsReservationServise.reservationDataList.subscribe(
       reservationStream => {
-        this.reservationList = reservationStream
+        this.reservationList$ = reservationStream
         let newReservationCount = 0;
         for (let i = 0; i < reservationStream.length; i++) {
           newReservationCount = newReservationCount + reservationStream[i].reservations_count;
         }
         this.reservationsCount = newReservationCount;
       }
+    );
+    this.basketService.basketDataList.subscribe(
+      basketStream => this.basketsList$ = basketStream
     )
+    this.authService.user.then(
+      user => this.actualUserID = user.uid
+    );
   }
-
+  
   ngOnInit(): void {
+    this.userRolesService.userRole(this.actualUserID).subscribe(
+      userRole => this.actualUserRole = userRole
+    )
   }
 
   findBorderTrips(): void {
@@ -95,16 +119,17 @@ export class TripsComponent implements OnInit {
   }
 
   addTripReservation(trip: TripStructure): void {
+    // TODO: change logic for basket countering and buttons active for basket
     let newValue = trip.availableSeats - 1;
+    let userBasket: Basket = this.basketsList$.find(obj => obj.user_id === this.actualUserID);
     if (trip.availableSeats == trip.maxSeats) {
-      let newReservation: Reservation = {
-        id: "newReservation",
-        trip_id: trip.id,
-        reservations_count: 1
-      }
-      this.tripsReservationServise.addTripReservation(newReservation);
+      this.tripsReservationServise.addTripReservation(trip.id).then(
+        reservation => {
+          this.basketService.addBasketReservation(userBasket, reservation.id);
+        }
+      )
     } else {
-      let reservation = this.reservationList.find(obj => obj.trip_id === trip.id)
+      let reservation = this.reservationList$.find(obj => obj.trip_id === trip.id)
       this.tripsReservationServise.addReservation(reservation);
     }
     trip.availableSeats = newValue;
@@ -112,12 +137,15 @@ export class TripsComponent implements OnInit {
   }
 
   removeTripReservation(trip: TripStructure): void {
+    // TODO: change logic for basket countering and buttons active for basket
+    let userBasket: Basket = this.basketsList$.find(obj => obj.user_id === this.actualUserID);
     let newValue = trip.availableSeats + 1;
     if (newValue == trip.maxSeats) {
-      let reservation = this.reservationList.find(obj => obj.trip_id === trip.id)
+      let reservation = this.reservationList$.find(obj => obj.trip_id === trip.id)
+      this.basketService.removeBasketReservation(userBasket, reservation.id);
       this.tripsReservationServise.deleteTripReservation(reservation);
     } else {
-      let reservation = this.reservationList.find(obj => obj.trip_id === trip.id)
+      let reservation = this.reservationList$.find(obj => obj.trip_id === trip.id)
       this.tripsReservationServise.removeReservation(reservation);
     }
     trip.availableSeats = newValue;
@@ -125,7 +153,7 @@ export class TripsComponent implements OnInit {
   }
 
   removeTrip(trip: TripStructure): void {
-    let reservation = this.reservationList.find(obj => obj.trip_id === trip.id)
+    let reservation = this.reservationList$.find(obj => obj.trip_id === trip.id)
     if (reservation != null) {
       this.tripsReservationServise.deleteTripReservation(reservation);
     }

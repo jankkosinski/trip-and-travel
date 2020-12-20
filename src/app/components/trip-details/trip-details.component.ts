@@ -9,6 +9,7 @@ import { TripStructure } from '../../models/trips_structure';
 export class TripDetailsComponent implements OnInit {
 
   @Input() trip: TripStructure;
+  @Input() userRole: string;
   @Output() onAddReservation = new EventEmitter();
   @Output() onRemoveReservation = new EventEmitter();
   @Output() onRemoveTrip = new EventEmitter();
