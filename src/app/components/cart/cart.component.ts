@@ -1,8 +1,10 @@
-import { Component, OnInit, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
 import { Reservation } from 'src/app/models/reservation_structure';
 import { TripStructure } from '../../models/trips_structure';
 import { TripsReservationService } from "../../services/trips-reservation.service"
 import { TripsDataService } from '../../services/trips-data.service';
+import { BasketService } from "../../services/basket.service";
+import { Basket } from "../../models/reservation_structure"
 
 @Component({
   selector: 'app-cart',
@@ -11,17 +13,27 @@ import { TripsDataService } from '../../services/trips-data.service';
 })
 export class CartComponent implements OnInit {
 
+  @Input() userID: string;
   @Output() closeCart = new EventEmitter();
 
   tripsDataList$: TripStructure[] = [];
   reservationList$: Reservation[] = [];
+  basketsList$: Basket[] = [];
+
   cartValue: number = 0;
 
-  constructor(private tripsReservationServise: TripsReservationService, private tripDataService: TripsDataService) { 
+  constructor(
+    private tripsReservationServise: TripsReservationService, 
+    private tripDataService: TripsDataService,
+    private basketService: BasketService
+    ) { 
     tripDataService.tripsDataList.subscribe(
       tripStream => {
         this.tripsDataList$ = tripStream;
       }
+    );
+    this.basketService.basketDataList.subscribe(
+      basketStream => this.basketsList$ = basketStream
     );
     this.tripsReservationServise.reservationDataList.subscribe(
       reservationStream => {
@@ -33,7 +45,7 @@ export class CartComponent implements OnInit {
         }
         this.cartValue = newCartValue;
       }
-    )
+    );
   }
 
   ngOnInit(): void {

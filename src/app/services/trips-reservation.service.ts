@@ -16,9 +16,14 @@ export class TripsReservationService {
     this.reservationDataList = this.reservationsDataCollection.valueChanges({ idField: 'id'});
   }
 
-  addTripReservation(reservation: Reservation) {
+  addTripReservation(tripID: string) {
+    let reservation: Reservation = {
+      id: "newReservation",
+      trip_id: tripID,
+      reservations_count: 1
+    }
     delete reservation.id;
-    this.reservationsDataCollection.add(reservation);
+    return this.reservationsDataCollection.add(reservation);
   }
 
   deleteTripReservation(reservation: Reservation) {
