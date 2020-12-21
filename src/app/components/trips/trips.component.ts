@@ -90,6 +90,16 @@ export class TripsComponent implements OnInit {
     )
   }
 
+  refreshUserReservations(): void {
+    let userBasket: Basket = this.basketsList$.find(obj => obj.user_id === this.actualUserID);
+    let newReservationCount = 0;
+    for (let i = 0; i < userBasket.reservation_list.length; i++) {
+      let reservation = this.reservationList$.find(obj => obj.id === userBasket.reservation_list[i]);
+      newReservationCount = newReservationCount + reservation.reservations_count;
+    }
+    this.reservationsCount = newReservationCount;
+  }
+
   findBorderTrips(): void {
     this.borderPrices = {
       low: {

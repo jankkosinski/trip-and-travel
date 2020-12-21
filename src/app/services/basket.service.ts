@@ -44,5 +44,12 @@ export class BasketService {
     delete basket.id;
     this.basketDataCollection.doc(id).update(basket);
   }
+
+  clearBasket(basket: Basket) {
+    const id: string = basket.id;
+    basket.reservation_list = [];
+    delete basket.id;
+    return this.basketDataCollection.doc(id).update(basket);
+  }
   
 }

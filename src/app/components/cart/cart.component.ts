@@ -6,6 +6,7 @@ import { TripsDataService } from '../../services/trips-data.service';
 import { BasketService } from "../../services/basket.service";
 import { Basket } from "../../models/reservation_structure"
 import { AuthService } from 'src/app/services/auth.service';
+import { OrdersService } from "../../services/orders.service"
 
 @Component({
   selector: 'app-cart',
@@ -15,10 +16,12 @@ import { AuthService } from 'src/app/services/auth.service';
 export class CartComponent implements OnInit {
 
   @Input() userID: string;
+  @Output() refreshReservation = new EventEmitter();
   @Output() closeCart = new EventEmitter();
 
   tripsDataList$: TripStructure[] = [];
   basketsList$: Basket[] = [];
+  reservationList$: Reservation[] = [];
   userReservationList$: Reservation[] = [];
 
   actualUserID: string = "";
@@ -29,7 +32,8 @@ export class CartComponent implements OnInit {
     private tripsReservationServise: TripsReservationService, 
     private tripDataService: TripsDataService,
     private basketService: BasketService,
-    private authService: AuthService
+    private authService: AuthService,
+    private ordersService: OrdersService
     ) { 
     tripDataService.tripsDataList.subscribe(
       tripStream => {
@@ -44,6 +48,7 @@ export class CartComponent implements OnInit {
     );
     this.tripsReservationServise.reservationDataList.subscribe(
       reservationStream => {
+        this.reservationList$ = reservationStream;
         let userBasket: Basket = this.basketsList$.find(obj => obj.user_id === this.actualUserID);
         this.userReservationList$ = reservationStream.filter(obj => userBasket.reservation_list.indexOf(obj.id) != -1);
         let newCartValue = 0;
@@ -60,7 +65,33 @@ export class CartComponent implements OnInit {
   }
 
   getTrip(trip_id: string): TripStructure {
-    return this.tripsDataList$.find(obj => obj.id === trip_id)
+    return this.tripsDataList$.find(obj => obj.id === trip_id);
+  }
+
+  refreshUserBasket(): void {
+    let userBasket: Basket = this.basketsList$.find(obj => obj.user_id === this.actualUserID);
+    this.userReservationList$ = this.reservationList$.filter(obj => userBasket.reservation_list.indexOf(obj.id) != -1);
+    let newCartValue = 0;
+    for (let i = 0; i < this.userReservationList$.length; i++) {
+      let trip = this.tripsDataList$.find(obj => obj.id === this.userReservationList$[i].trip_id);
+      newCartValue = newCartValue + (trip.price * this.userReservationList$[i].reservations_count);
+    }
+    this.cartValue = newCartValue;
+  }
+
+  onPurchase(): void {
+    let userBasket: Basket = this.basketsList$.find(obj => obj.user_id === this.actualUserID);
+    this.ordersService.addUserOrder(this.actualUserID, userBasket).then(
+      () => {
+        this.basketService.clearBasket(userBasket).then(
+          () => {
+            this.refreshUserBasket();
+            this.refreshReservation.emit();
+            this.close();
+          }
+        );
+      }
+    );
   }
 
   removeReservation(reservation: Reservation): void {

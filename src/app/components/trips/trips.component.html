@@ -19,7 +19,8 @@
         <app-cart
         *ngIf="reservationsCount!=0"
         [userID]="actualUserID"
-        (closeCart)="drawer.close()">
+        (closeCart)="drawer.close()"
+        (refreshReservation)="refreshUserReservations()">
         </app-cart>
     </mat-drawer>
     

@@ -9,3 +9,9 @@ export interface Basket {
     user_id: string,
     reservation_list: Array<string>
 }
+
+export interface Order {
+    id: string,
+    user_id: string,
+    reservation_list: Array<string>
+}

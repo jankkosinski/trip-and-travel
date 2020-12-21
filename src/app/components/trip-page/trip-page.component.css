@@ -27,3 +27,7 @@
   .mt-10 {
     margin-top: 10px;
   }
+
+  .limit {
+    max-height: 700px;
+  }
