@@ -35,7 +35,7 @@ export class BasketService {
     const id: string = basket.id;
     basket.reservation_list.push(reservationID);
     delete basket.id;
-    this.basketDataCollection.doc(id).update(basket);
+    return this.basketDataCollection.doc(id).update(basket);
   }
 
   removeBasketReservation(basket: Basket, reservationID: string) {

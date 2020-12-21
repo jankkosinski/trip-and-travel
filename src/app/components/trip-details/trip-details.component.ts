@@ -10,6 +10,7 @@ export class TripDetailsComponent implements OnInit {
 
   @Input() trip: TripStructure;
   @Input() userRole: string;
+  @Input() userTripReservations: number;
   @Output() onAddReservation = new EventEmitter();
   @Output() onRemoveReservation = new EventEmitter();
   @Output() onRemoveTrip = new EventEmitter();

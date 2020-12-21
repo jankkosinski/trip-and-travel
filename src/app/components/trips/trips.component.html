@@ -36,6 +36,7 @@
                 <app-trip-details 
                     [trip]="item" 
                     [userRole]="actualUserRole.role"
+                    [userTripReservations]="getUserTripReservations(item)"
                     (onAddReservation)="addTripReservation($event)" 
                     (onRemoveReservation)="removeTripReservation($event)" 
                     (onRemoveTrip)="removeTrip($event)"

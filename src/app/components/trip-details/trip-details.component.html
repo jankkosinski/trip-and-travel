@@ -20,7 +20,7 @@
     <button [disabled] = "trip.availableSeats == 0 ? true : false" (click)="addReservation()" class="btn-floating waves-effect waves-light btn-margin">
         <i class="material-icons">add</i>
     </button>
-    <button [disabled] = "trip.availableSeats == trip.maxSeats ? true : false" (click)="removeReservation()" class="btn-floating red waves-effect waves-light btn-margin">
+    <button [disabled] = "userTripReservations == 0 ? true : false" (click)="removeReservation()" class="btn-floating red waves-effect waves-light btn-margin">
         <i class="material-icons">remove</i>
     </button>
 </div>
@@ -46,11 +46,12 @@
             </app-star-rates>
         </ng-container>
     </div>
+    <span *ngIf="userTripReservations != 0" class="new badge">{{userTripReservations}}</span>
     <div>
         Rate: {{getTripRate()}} / 5 <br>
         Voted: {{trip.rated_count}}
     </div>
 </div>
-<div class="col s12 description">
+<div class="col s12 description"> 
     {{trip.description}}
 </div>

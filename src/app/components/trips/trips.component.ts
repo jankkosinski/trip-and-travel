@@ -64,21 +64,23 @@ export class TripsComponent implements OnInit {
         this.findBorderTrips();
       }
     );
+    this.basketService.basketDataList.subscribe(
+      basketStream => this.basketsList$ = basketStream
+    );
+    this.authService.user.then(
+      user => this.actualUserID = user.uid
+    );
     this.tripsReservationServise.reservationDataList.subscribe(
       reservationStream => {
-        this.reservationList$ = reservationStream
+        this.reservationList$ = reservationStream;
+        let userBasket: Basket = this.basketsList$.find(obj => obj.user_id === this.actualUserID);
         let newReservationCount = 0;
-        for (let i = 0; i < reservationStream.length; i++) {
-          newReservationCount = newReservationCount + reservationStream[i].reservations_count;
+        for (let i = 0; i < userBasket.reservation_list.length; i++) {
+          let reservation = reservationStream.find(obj => obj.id === userBasket.reservation_list[i]);
+          newReservationCount = newReservationCount + reservation.reservations_count;
         }
         this.reservationsCount = newReservationCount;
       }
-    );
-    this.basketService.basketDataList.subscribe(
-      basketStream => this.basketsList$ = basketStream
-    )
-    this.authService.user.then(
-      user => this.actualUserID = user.uid
     );
   }
   
@@ -119,43 +121,67 @@ export class TripsComponent implements OnInit {
   }
 
   addTripReservation(trip: TripStructure): void {
-    // TODO: change logic for basket countering and buttons active for basket
     let newValue = trip.availableSeats - 1;
     let userBasket: Basket = this.basketsList$.find(obj => obj.user_id === this.actualUserID);
-    if (trip.availableSeats == trip.maxSeats) {
+    let userReservations = this.reservationList$.filter(obj => userBasket.reservation_list.indexOf(obj.id) != - 1);
+    let actualUserTripReservation = userReservations.find(obj => obj.trip_id === trip.id);
+    if (actualUserTripReservation?.id == null) {
       this.tripsReservationServise.addTripReservation(trip.id).then(
         reservation => {
-          this.basketService.addBasketReservation(userBasket, reservation.id);
+          this.basketService.addBasketReservation(userBasket, reservation.id).then(
+            () => {
+              trip.availableSeats = newValue;
+              this.tripDataService.updateProduct(trip);
+            }
+          );
         }
       )
     } else {
-      let reservation = this.reservationList$.find(obj => obj.trip_id === trip.id)
-      this.tripsReservationServise.addReservation(reservation);
+      this.tripsReservationServise.addReservation(actualUserTripReservation);
+      trip.availableSeats = newValue;
+      this.tripDataService.updateProduct(trip);
     }
-    trip.availableSeats = newValue;
-    this.tripDataService.updateProduct(trip);
   }
 
   removeTripReservation(trip: TripStructure): void {
-    // TODO: change logic for basket countering and buttons active for basket
-    let userBasket: Basket = this.basketsList$.find(obj => obj.user_id === this.actualUserID);
     let newValue = trip.availableSeats + 1;
-    if (newValue == trip.maxSeats) {
-      let reservation = this.reservationList$.find(obj => obj.trip_id === trip.id)
-      this.basketService.removeBasketReservation(userBasket, reservation.id);
-      this.tripsReservationServise.deleteTripReservation(reservation);
+    let userBasket: Basket = this.basketsList$.find(obj => obj.user_id === this.actualUserID);
+    let userReservations = this.reservationList$.filter(obj => userBasket.reservation_list.indexOf(obj.id) != -1);
+    let actualUserTripReservation = userReservations.find(obj => obj.trip_id === trip.id);
+    if (actualUserTripReservation.reservations_count == 1) {
+      this.basketService.removeBasketReservation(userBasket, actualUserTripReservation.id);
+      this.tripsReservationServise.deleteTripReservation(actualUserTripReservation);
     } else {
-      let reservation = this.reservationList$.find(obj => obj.trip_id === trip.id)
-      this.tripsReservationServise.removeReservation(reservation);
+      this.tripsReservationServise.removeReservation(actualUserTripReservation);
     }
     trip.availableSeats = newValue;
     this.tripDataService.updateProduct(trip);
   }
 
+  getUserTripReservations(trip: TripStructure): number {
+    let userBasket: Basket = this.basketsList$.find(obj => obj.user_id === this.actualUserID);
+    let userReservations = this.reservationList$.filter(obj => userBasket.reservation_list.indexOf(obj.id) != -1);
+    let actualUserTripReservation = userReservations.find(obj => obj.trip_id === trip.id);
+    if (actualUserTripReservation?.id != null) {
+      return actualUserTripReservation.reservations_count;
+    } else {
+      return 0;
+    }
+  }
+
   removeTrip(trip: TripStructure): void {
-    let reservation = this.reservationList$.find(obj => obj.trip_id === trip.id)
-    if (reservation != null) {
-      this.tripsReservationServise.deleteTripReservation(reservation);
+    let tripReservationList = this.reservationList$.filter(obj => obj.trip_id === trip.id);
+    if (tripReservationList.length != 0) {
+      for (let i = 0; i < tripReservationList.length; i++) {
+        let actualTripId = tripReservationList[i].id;
+        let basketsToUpdate = this.basketsList$.filter(obj => obj.reservation_list.indexOf(actualTripId));
+        if (basketsToUpdate.length != 0) {
+          for (let j = 0; j < basketsToUpdate.length; j++) {
+            this.basketService.removeBasketReservation(basketsToUpdate[j], actualTripId);
+          }
+        }
+        this.tripsReservationServise.deleteTripReservation(tripReservationList[i]);
+      }
     }
     this.tripDataService.deleteProduct(trip);
   }

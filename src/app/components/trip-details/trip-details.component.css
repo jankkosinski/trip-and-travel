@@ -35,3 +35,9 @@
         width: 100%;
     }
 }
+
+.description {
+    border-top: 1px solid black;
+    margin-top: 10px;
+    padding: 5px;
+}
