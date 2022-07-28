@@ -1,5 +1,8 @@
 # TripAndTravel
 
+Tris project was prepared as a project for studies.
+This repo was mocved from my old student's github account.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0.
 
 ## Development server
